@@ -14,3 +14,10 @@ Thumbs.db
 *.zip
 *.log
 .ziptmp/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
