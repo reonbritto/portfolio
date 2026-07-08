@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reon Britto</title>
+<meta name="description" content="Personal site — Reon Britto. Belfast <> Bengaluru. Cyber Security & DevSecOps Engineer — CI/CD, Infrastructure as Code, Kubernetes, Azure, eBPF." />
+<meta name="author" content="Reon Britto" />
+<meta name="theme-color" content="#f7f6f3" />
+
+<!-- Icons — Oggy. Animated GIF favicon (animates in Firefox; Chrome/Safari show the static
+     first-frame PNG fallback below). -->
+<link rel="icon" type="image/gif" href="assets/oggy.gif" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/oggy-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/oggy.gif" />
+
+<!-- OpenGraph.  NOTE: og:url and og:image MUST be absolute URLs for LinkedIn/Slack/Twitter
+     to render the share card. After you deploy, replace https://reonbritto.dev below with your
+     real domain (a single find-and-replace of "https://reonbritto.dev"). -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Reon Britto" />
+<meta property="og:url" content="https://reonbritto.dev/" />
+<meta property="og:title" content="Reon Britto — Cyber Security & DevSecOps Engineer" />
+<meta property="og:description" content="Two years at Kyndryl building CI/CD pipelines and multi-cloud infrastructure. MSc Applied Cyber Security, Queen's University Belfast. Open to DevOps & Platform Engineering roles." />
+<meta property="og:image" content="https://reonbritto.dev/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Reon Britto — Cyber Security & DevSecOps Engineer" />
+<meta property="og:locale" content="en_GB" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Reon Britto — Cyber Security & DevSecOps Engineer" />
+<meta name="twitter:description" content="CI/CD · Infrastructure as Code · Kubernetes · Azure · eBPF. Open to DevOps & Platform Engineering roles." />
+<meta name="twitter:image" content="https://reonbritto.dev/assets/og-image.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="site-shell">
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="site-header__row">
+      <button type="button" class="site-header__brand" id="brandHome">
+        <span class="site-header__name">Reon Britto</span>
+        <span class="site-header__role">Belfast &lt;&gt; Bengaluru</span>
+      </button>
+      <nav class="site-tabs" role="tablist" aria-label="Sections">
+        <button type="button" role="tab" id="tab-about" aria-selected="true" aria-controls="panel-about" class="site-tabs__item section-accent--coral site-tabs__item--active">About</button>
+        <button type="button" role="tab" id="tab-work" aria-selected="false" aria-controls="panel-work" class="site-tabs__item section-accent--blue">Work</button>
+        <button type="button" role="tab" id="tab-education" aria-selected="false" aria-controls="panel-education" class="site-tabs__item section-accent--violet">Education</button>
+        <button type="button" role="tab" id="tab-skills" aria-selected="false" aria-controls="panel-skills" class="site-tabs__item section-accent--teal">Skills</button>
+        <button type="button" role="tab" id="tab-projects" aria-selected="false" aria-controls="panel-projects" class="site-tabs__item section-accent--amber">Projects</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= ABOUT ================= -->
+  <div role="tabpanel" id="panel-about" aria-labelledby="tab-about" class="site-panel">
+    <div>
+      <header class="about-hero">
+        <div class="about-hero__media">
+          <img src="assets/reon.jpg" alt="Reon Britto" class="about-hero__photo" width="242" height="242" decoding="async" />
+        </div>
+        <div class="about-hero__copy">
+          <p class="about-copy">Hiya — I'm Reon, a DevSecOps engineer who spends way too much time thinking about pipelines, cloud platforms, and how to fix things when they break.</p>
+          <p class="about-copy about-copy--spaced">After two years working with Azure DevOps and cloud infrastructure at Kyndryl in Bengaluru, I packed my bags and moved to the UK to dive deeper into security through an MSc in Applied Cyber Security at Queen's University Belfast. Lately, I've been focused on the space where cloud, automation, and security actually meet — building systems that are fast to ship but hard to break.</p>
+          <p class="about-copy about-copy--spaced">I specialize in CI/CD automation, Infrastructure as Code, and shifting security left so it's baked in from day one rather than bolted on at the end. My favorite kind of work involves taking messy, manual, fragile processes and turning them into clean, automated, reliable ones.</p>
+          <p class="about-copy about-copy--spaced">Off the clock, you'll find me messing around in a home lab breaking things to understand how they work, half-watching football, or falling down a browsing rabbit hole at 2am (no regrets).</p>
+        </div>
+      </header>
+
+      <nav class="about-connect" aria-label="Social links and resume">
+        <ul class="about-connect__list">
+          <li>
+            <a href="mailto:rbritto01@qub.ac.uk" class="about-connect__link">
+              <svg class="about-connect__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 3.3-8 5.71L4 7.3V6l8 5.42L20 6v1.3z"/></svg>
+              <span>Email</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/reonbritto" target="_blank" rel="noopener noreferrer" class="about-connect__link">
+              <svg class="about-connect__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/reonbritto" target="_blank" rel="noopener noreferrer" class="about-connect__link">
+              <svg class="about-connect__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.58 9.58 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+              <span>GitHub</span>
+            </a>
+          </li>
+          <li class="about-connect__item--resume">
+            <a href="assets/reon-britto-resume.pdf" target="_blank" rel="noopener noreferrer" class="about-connect__link" data-preview="resume" aria-haspopup="dialog">
+              <svg class="about-connect__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2 5 5h-5V4zM8 13h8v2H8v-2zm0 4h5v2H8v-2z"/></svg>
+              <span>Resume</span>
+            </a>
+          </li>
+          <li aria-hidden="true"><img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ================= CONNECT PREVIEW PANEL ================= -->
+  <div class="resume-preview" id="connectPreview" role="dialog" aria-label="Link preview" aria-modal="false" hidden>
+    <button type="button" class="resume-preview__backdrop" id="previewBackdrop" aria-label="Close preview"></button>
+    <div class="resume-preview__panel">
+      <div class="resume-preview__header">
+        <div class="resume-preview__header-brand">
+          <span id="previewIcon" aria-hidden="true"></span>
+          <h2 class="resume-preview__title" id="previewTitle">Preview</h2>
+        </div>
+        <a class="resume-preview__open" id="previewOpen" href="#" target="_blank" rel="noopener noreferrer">Open ↗</a>
+        <button type="button" class="resume-preview__close" id="previewClose" aria-label="Close">×</button>
+      </div>
+      <div class="resume-preview__body">
+        <div class="resume-preview__loader" id="previewLoader" hidden><span class="resume-preview__spinner"></span></div>
+        <iframe class="resume-preview__pdf" id="previewFrame" title="Preview" src="about:blank" hidden></iframe>
+        <div class="connect-card" id="previewCard" hidden></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= WORK ================= -->
+  <div role="tabpanel" id="panel-work" aria-labelledby="tab-work" class="site-panel" hidden>
+    <header class="page-hero">
+      <h1 class="page-hero__title">Work <img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></h1>
+    </header>
+    <ul class="entry-list">
+      <li>
+        <article class="entry-card entry-card--static">
+          <div class="entry-card__top">
+            <div class="entry-card__head">
+              <span class="org-logo" data-mono="K"><img src="assets/logos/kyndryl.png" alt="Kyndryl" loading="lazy" onerror="this.remove()" /></span>
+              <div class="entry-card__head-text">
+                <h2 class="entry-card__title">Graduate DevSecOps Engineer</h2>
+                <p class="entry-card__meta entry-card__subtitle">Kyndryl</p>
+              </div>
+            </div>
+            <p class="entry-card__meta entry-card__meta--corner">
+              <span class="entry-card__meta-line">Sep 2023 — Aug 2025</span>
+              <span class="entry-card__meta-line entry-card__meta-line--secondary">Bengaluru, India</span>
+            </p>
+          </div>
+          <ul class="entry-card__points">
+            <li>Architected and managed 100+ end-to-end CI/CD pipelines in Azure DevOps across DEV, PRE-PROD, and PROD environments, automating build, test, and release workflows that cut deployment cycles by 80% (40 hrs down to 8 hrs).</li>
+            <li>Led the zero-downtime migration of 3 legacy on-premises applications serving 100,000+ corporate and commercial customers to Azure DevOps; established Git branching strategies that streamlined collaboration across distributed development teams.</li>
+            <li>Provisioned and managed multi-cloud infrastructure (Azure &amp; AWS) using Terraform and Terraform Cloud with modular configurations and reusable modules delivering consistent, auditable deployments across teams.</li>
+            <li>Containerised microservices with Docker and orchestrated workloads on Kubernetes (Ingress, DNS, Load Balancers); monitored application and infrastructure health using Prometheus, Grafana, and Datadog.</li>
+            <li>Managed Identity &amp; Access Management via Microsoft Entra ID, enforcing least-privilege access through automated user provisioning, RBAC role assignments, conditional access policies, and periodic access reviews across cloud tenants.</li>
+            <li>Embedded Checkmarx SAST/SCA scanning into CI/CD pipelines across multiple enterprise projects, detecting and remediating vulnerabilities early to ensure compliance throughout the SDLC.</li>
+            <li>Contributed to HLD/LLD design, reusable pipeline templates, and internal developer platform initiatives (Backstage); led DevSecOps knowledge-sharing sessions and took part in DevSecOps maturity assessments.</li>
+          </ul>
+          <p class="entry-card__award">★ Awarded for Exceptional Performance &amp; Contribution to Cloud Practice Customers</p>
+        </article>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ================= EDUCATION ================= -->
+  <div role="tabpanel" id="panel-education" aria-labelledby="tab-education" class="site-panel" hidden>
+    <header class="page-hero">
+      <h1 class="page-hero__title">Education <img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></h1>
+    </header>
+    <ul class="entry-list">
+      <li>
+        <article class="entry-card entry-card--static">
+          <div class="entry-card__top">
+            <div class="entry-card__head">
+              <span class="org-logo" data-mono="Q"><img src="assets/logos/qub.png" alt="Queen's University Belfast" loading="lazy" onerror="this.remove()" /></span>
+              <div class="entry-card__head-text">
+                <h2 class="entry-card__title">MSc — Applied Cyber Security</h2>
+                <p class="entry-card__meta entry-card__subtitle">Queen's University Belfast</p>
+              </div>
+            </div>
+            <p class="entry-card__meta entry-card__meta--corner">
+              <span class="entry-card__meta-line">2025 — 2026 (expected)</span>
+              <span class="entry-card__meta-line entry-card__meta-line--secondary">Belfast, UK</span>
+            </p>
+          </div>
+          <p class="entry-card__body">
+            Network Security &amp; Monitoring, Pen-testing &amp; Ethical Hacking, Cyber-AI,
+            Software Assurance, Cryptography.
+          </p>
+          <p class="entry-card__body entry-card__body--dissertation">
+            <strong>Dissertation:</strong> Design of a Botnet Detection Application using eBPF.
+          </p>
+        </article>
+      </li>
+      <li>
+        <article class="entry-card entry-card--static">
+          <div class="entry-card__top">
+            <div class="entry-card__head">
+              <span class="org-logo" data-mono="V"><img src="assets/logos/vtu.png" alt="Visvesvaraya Technological University" loading="lazy" onerror="this.remove()" /></span>
+              <div class="entry-card__head-text">
+                <h2 class="entry-card__title">BE — Computer Science &amp; Engineering</h2>
+                <p class="entry-card__meta entry-card__subtitle">Visvesvaraya Technological University</p>
+              </div>
+            </div>
+            <p class="entry-card__meta entry-card__meta--corner">
+              <span class="entry-card__meta-line">2019 — 2023</span>
+              <span class="entry-card__meta-line entry-card__meta-line--secondary">India</span>
+            </p>
+          </div>
+        </article>
+      </li>
+      <li>
+        <article class="entry-card entry-card--static">
+          <div class="entry-card__top">
+            <div class="entry-card__head">
+              <div class="entry-card__head-text">
+                <h2 class="entry-card__title">Certifications</h2>
+              </div>
+            </div>
+          </div>
+          <ul class="cert-list">
+            <li>
+              <span class="cert-list__code">AZ-400</span>
+              <span class="cert-list__name">Azure DevOps Engineer Expert</span>
+              <span class="cert-list__issuer">Microsoft</span>
+            </li>
+            <li>
+              <span class="cert-list__code">AZ-500</span>
+              <span class="cert-list__name">Azure Security Engineer Associate</span>
+              <span class="cert-list__issuer">Microsoft</span>
+            </li>
+            <li>
+              <span class="cert-list__code">AZ-104</span>
+              <span class="cert-list__name">Azure Administrator Associate</span>
+              <span class="cert-list__issuer">Microsoft</span>
+            </li>
+            <li>
+              <span class="cert-list__code">AZ-900</span>
+              <span class="cert-list__name">Azure Fundamentals</span>
+              <span class="cert-list__issuer">Microsoft</span>
+            </li>
+            <li>
+              <span class="cert-list__code">AI-900</span>
+              <span class="cert-list__name">Azure AI Fundamentals</span>
+              <span class="cert-list__issuer">Microsoft</span>
+            </li>
+            <li>
+              <span class="cert-list__code">Terraform</span>
+              <span class="cert-list__name">Terraform Associate (003)</span>
+              <span class="cert-list__issuer">HashiCorp</span>
+            </li>
+          </ul>
+        </article>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ================= SKILLS ================= -->
+  <div role="tabpanel" id="panel-skills" aria-labelledby="tab-skills" class="site-panel" hidden>
+    <header class="page-hero">
+      <h1 class="page-hero__title">Skills <img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></h1>
+    </header>
+    <div class="skills-grid">
+      <section class="entry-card entry-card--static skill-group-card">
+        <h2 class="skill-group-card__title">Cloud &amp; Infrastructure</h2>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/azure.png" alt="" loading="lazy" /></span><span class="skill-chip__label">Azure</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/aws.png" alt="" loading="lazy" /></span><span class="skill-chip__label">AWS</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/terraform.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Terraform</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/kubernetes.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Kubernetes</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/helm.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Helm</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/docker.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Docker</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/linux.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Linux</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/windowsserver.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Windows Server</span></span>
+        </div>
+      </section>
+      <section class="entry-card entry-card--static skill-group-card">
+        <h2 class="skill-group-card__title">DevOps &amp; CI/CD</h2>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/azuredevops.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Azure DevOps</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/gitlab.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">GitLab CI</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/jenkins.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Jenkins</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/githubactions.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">GitHub Actions</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/argo.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">ArgoCD</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/backstage.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Backstage</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/git.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Git</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/github.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">GitHub</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/python.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Python</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/bash.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Bash</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/powershell.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">PowerShell</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/prometheus.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Prometheus</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/grafana.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Grafana</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/prometheus.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Alertmanager</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/elk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">ELK</span></span>
+        </div>
+      </section>
+      <section class="entry-card entry-card--static skill-group-card">
+        <h2 class="skill-group-card__title">Application Security</h2>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sast.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">SAST</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/dast.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">DAST</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sca.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">SCA</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/checkmarx.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Checkmarx</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sonarqube.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">SonarQube</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/snyk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Snyk</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/trivy.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Trivy</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP Top 10</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP ZAP</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/burpsuite.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Burp Suite</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/opa.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OPA</span></span>
+        </div>
+      </section>
+      <section class="entry-card entry-card--static skill-group-card">
+        <h2 class="skill-group-card__title">Identity &amp; SecOps</h2>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/entra.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Entra ID</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender EDR</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sentinel.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Sentinel</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/splunk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Splunk</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/kql.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">KQL</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/nmap.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Nmap</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/mitre.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">MITRE ATT&amp;CK</span></span>
+        </div>
+      </section>
+      <section class="entry-card entry-card--static skill-group-card">
+        <h2 class="skill-group-card__title">AI &amp; Agentic Tooling</h2>
+        <div class="skill-chips">
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/claude.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Claude Code</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/githubcopilot.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">GitHub Copilot</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/antigravity.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Google Antigravity</span></span>
+        </div>
+      </section>
+    </div>
+    <p class="panel-footnote">
+      I build with AI agents daily — Claude Code, GitHub Copilot and Google Antigravity are
+      part of my standard toolchain. Paired with solid engineering judgment, they let me take
+      an idea from whiteboard to production faster than a traditional workflow, without
+      compromising on quality or security.
+    </p>
+  </div>
+
+  <!-- ================= PROJECTS ================= -->
+  <div role="tabpanel" id="panel-projects" aria-labelledby="tab-projects" class="site-panel" hidden>
+    <header class="page-hero">
+      <h1 class="page-hero__title">Projects <img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></h1>
+    </header>
+    <ul class="entry-list entry-list--stories">
+      <li>
+        <a class="entry-card entry-card--story entry-card--story-link" href="https://github.com/reonbritto/sbom-analyzer" target="_blank" rel="noopener noreferrer">
+          <div class="entry-card__top entry-card__top--project">
+            <div class="entry-card__head-text">
+              <h2 class="entry-card__title entry-card__title--story">SBOM Vulnerability Analyzer</h2>
+              <p class="entry-card__meta entry-card__subtitle">Next.js 15 · React 19 · Supply-chain security</p>
+            </div>
+            <span class="entry-card__repo mono">reonbritto/sbom-analyzer</span>
+          </div>
+          <p class="entry-card__body">
+            Upload a CycloneDX or SPDX SBOM and see what's actually dangerous — every CVE
+            enriched with EPSS exploit probability, CISA KEV flags and ATT&amp;CK mappings,
+            plus typosquat detection, a 0–100 risk score and a one-version fix planner.
+          </p>
+          <div class="entry-card__tags">
+            <span class="tag">Next.js 15</span><span class="tag">React 19</span>
+            <span class="tag">Prisma</span><span class="tag">Postgres</span>
+            <span class="tag">Redis</span><span class="tag">OSV.dev</span>
+            <span class="tag">EPSS</span><span class="tag">CISA KEV</span>
+            <span class="tag">ATT&amp;CK</span><span class="tag">Docker</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="entry-card entry-card--story entry-card--story-link" href="https://github.com/reonbritto/cwe-explorer" target="_blank" rel="noopener noreferrer">
+          <div class="entry-card__top entry-card__top--project">
+            <div class="entry-card__head-text">
+              <h2 class="entry-card__title entry-card__title--story">PureSecure CWE Explorer</h2>
+              <p class="entry-card__meta entry-card__subtitle">FastAPI · React · Security analytics</p>
+            </div>
+            <span class="entry-card__repo mono">reonbritto/cwe-explorer</span>
+          </div>
+          <p class="entry-card__body">
+            A security analytics platform linking MITRE CWE, NVD CVE, CAPEC and ATT&amp;CK —
+            deployed to Azure AKS via Terraform &amp; Helm, with ArgoCD and an 8-stage GitLab
+            CI pipeline running Semgrep, Trivy and CycloneDX SBOM.
+          </p>
+          <div class="entry-card__tags">
+            <span class="tag">FastAPI</span><span class="tag">React</span>
+            <span class="tag">Redis</span><span class="tag">Azure AKS</span>
+            <span class="tag">Terraform</span><span class="tag">Helm</span>
+            <span class="tag">ArgoCD</span><span class="tag">GitLab CI</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <a class="entry-card entry-card--story entry-card--story-link" href="https://github.com/reonbritto/AzureSOC" target="_blank" rel="noopener noreferrer">
+          <div class="entry-card__top entry-card__top--project">
+            <div class="entry-card__head-text">
+              <h2 class="entry-card__title entry-card__title--story">Azure SOC &amp; Honeynet</h2>
+              <p class="entry-card__meta entry-card__subtitle">Microsoft Sentinel · KQL · Cloud detection</p>
+            </div>
+            <span class="entry-card__repo mono">reonbritto/AzureSOC</span>
+          </div>
+          <p class="entry-card__body">
+            A cloud honeynet luring live attack traffic into Microsoft Sentinel, with custom
+            KQL rules driving attack maps and alerts. NSG, firewall and Entra ID hardening
+            cut security incidents by over 90%.
+          </p>
+          <div class="entry-card__tags">
+            <span class="tag">Microsoft Sentinel</span><span class="tag">Log Analytics</span>
+            <span class="tag">KQL</span><span class="tag">NSG</span>
+            <span class="tag">Entra ID</span><span class="tag">SOC</span>
+          </div>
+        </a>
+      </li>
+      <li>
+        <article class="entry-card entry-card--story">
+          <div class="entry-card__top entry-card__top--project">
+            <div class="entry-card__head-text">
+              <h2 class="entry-card__title entry-card__title--story">Botnet Detection with eBPF</h2>
+              <p class="entry-card__meta entry-card__subtitle">eBPF · XDP · MSc dissertation</p>
+            </div>
+          </div>
+          <p class="entry-card__body">
+            Kernel-level botnet detection with eBPF and XDP. A live-NIC rate-limiter held a
+            97% packet drop rate under a 5,000 pps flood over the public internet.
+          </p>
+          <div class="entry-card__tags">
+            <span class="tag">eBPF</span><span class="tag">XDP</span>
+            <span class="tag">Linux kernel</span><span class="tag">C</span>
+            <span class="tag">Network security</span><span class="tag">GCP</span>
+          </div>
+        </article>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="site-footer__skyline">
+      <svg viewBox="0 0 1000 100" width="100%" height="auto" class="site-footer__skyline-svg" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="0" y1="80" x2="1000" y2="80"></line>
+          <g class="site-footer__skyline-buildings">
+            <!-- Samson & Goliath gantry cranes (Belfast) -->
+            <polyline points="470,80 470,20 560,20 560,80"></polyline>
+            <line x1="470" y1="34" x2="560" y2="34"></line>
+            <line x1="515" y1="20" x2="515" y2="34"></line>
+            <polyline points="590,80 590,30 660,30 660,80"></polyline>
+            <line x1="590" y1="42" x2="660" y2="42"></line>
+            <!-- City hall dome -->
+            <rect x="700" y="55" width="80" height="25"></rect>
+            <path d="M 720 55 C 720 38, 760 38, 760 55"></path>
+            <line x1="740" y1="30" x2="740" y2="41"></line>
+            <!-- terraces -->
+            <rect x="820" y="60" width="24" height="20"></rect>
+            <rect x="852" y="52" width="24" height="28"></rect>
+            <rect x="884" y="62" width="24" height="18"></rect>
+          </g>
+        </g>
+      </svg>
+      <div class="site-footer__skyline-hover" aria-label="Now based in Belfast, Northern Ireland.">
+        <span class="site-footer__skyline-caption" role="tooltip">Now based in Belfast — home of Samson &amp; Goliath.</span>
+      </div>
+    </div>
+    <div class="site-footer__content">
+      <p class="site-footer__line">© 2026 · Reon Britto · <a href="mailto:rbritto01@qub.ac.uk" class="site-footer__link">Contact</a></p>
+    </div>
+  </footer>
+
+</div>
+<script src="main.js"></script>
+</body>
+</html>

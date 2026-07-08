@@ -1,0 +1,4 @@
+# Cloudflare Pages — redirects / SPA fallback
+# https://developers.cloudflare.com/pages/configuration/redirects/
+# The site is a single page using #hash tabs; send any unknown path to it (200 = rewrite, not redirect).
+/*    /index.html   200

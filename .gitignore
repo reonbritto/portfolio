@@ -1,0 +1,16 @@
+# Not needed for Cloudflare Pages (static-only deploy)
+/README.md
+/docker-compose.yml
+/site/Dockerfile
+/site/nginx.conf
+
+# Editor / tooling
+/.claude
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local artifacts
+*.zip
+*.log
+.ziptmp/
