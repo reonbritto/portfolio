@@ -42,7 +42,7 @@
 <script>
   window.sentryOnLoad = function () {
     Sentry.init({
-      environment: location.hostname === "reondev.top" ? "production" : "local",
+      environment: "production",
       release: "reon-portfolio@1.0.0",
       // Tracing — capture performance data
       tracesSampleRate: 1.0,
