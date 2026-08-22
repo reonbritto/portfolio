@@ -166,15 +166,15 @@
             </p>
           </div>
           <ul class="entry-card__points">
+            <li>Enforced cloud governance and access control across Azure tenants via Microsoft Entra ID — RBAC role assignments, conditional access policies, automated user provisioning, and periodic access reviews to maintain least privilege.</li>
+            <li>Automated infrastructure provisioning across Azure and AWS using Terraform and Terraform Cloud, with modular, reusable configurations delivering repeatable, auditable deployments across subscriptions.</li>
             <li>Architected and managed 100+ end-to-end CI/CD pipelines in Azure DevOps across DEV, PRE-PROD, and PROD environments, automating build, test, and release workflows that cut deployment cycles by 80% (40 hrs down to 8 hrs).</li>
-            <li>Led the zero-downtime migration of 3 legacy on-premises applications serving 100,000+ corporate and commercial customers to Azure DevOps; established Git branching strategies that streamlined collaboration across distributed development teams.</li>
-            <li>Provisioned and managed multi-cloud infrastructure (Azure &amp; AWS) using Terraform and Terraform Cloud with modular configurations and reusable modules delivering consistent, auditable deployments across teams.</li>
-            <li>Containerised microservices with Docker and orchestrated workloads on Kubernetes (Ingress, DNS, Load Balancers); monitored application and infrastructure health using Prometheus, Grafana, and Datadog.</li>
-            <li>Managed Identity &amp; Access Management via Microsoft Entra ID, enforcing least-privilege access through automated user provisioning, RBAC role assignments, conditional access policies, and periodic access reviews across cloud tenants.</li>
-            <li>Embedded Checkmarx SAST/SCA scanning into CI/CD pipelines across multiple enterprise projects, detecting and remediating vulnerabilities early to ensure compliance throughout the SDLC.</li>
-            <li>Contributed to HLD/LLD design, reusable pipeline templates, and internal developer platform initiatives (Backstage); led DevSecOps knowledge-sharing sessions and took part in DevSecOps maturity assessments.</li>
+            <li>Integrated security and compliance gates into CI/CD pipelines using Checkmarx SAST/SCA, detecting and remediating findings early and enforcing organisational security standards throughout the SDLC.</li>
+            <li>Led the zero-downtime migration of 3 legacy applications serving 100,000+ corporate and commercial customers from TFS to Azure DevOps, establishing Git branching strategies across distributed development teams.</li>
+            <li>Containerised microservices with Docker and orchestrated workloads on Kubernetes (Ingress, DNS, load balancers); monitored application and infrastructure health using Prometheus and Grafana.</li>
+            <li>Contributed to HLD/LLD DevSecOps design, the internal developer platform, and AI infrastructure initiatives; led DevSecOps knowledge-sharing sessions and took part in DevSecOps maturity assessments.</li>
           </ul>
-          <p class="entry-card__award">★ Awarded for Exceptional Performance &amp; Contribution to Cloud Practice Customers</p>
+          <p class="entry-card__award">★ Exceptional Performance &amp; Contribution to Cloud Practice Customers</p>
         </article>
       </li>
     </ul>
@@ -197,10 +197,13 @@
               </div>
             </div>
             <p class="entry-card__meta entry-card__meta--corner">
-              <span class="entry-card__meta-line">2025 — 2026 (expected)</span>
+              <span class="entry-card__meta-line">Sep 2025 — Sep 2026 (expected)</span>
               <span class="entry-card__meta-line entry-card__meta-line--secondary">Belfast, UK</span>
             </p>
           </div>
+          <p class="entry-card__body">
+            <strong>Grade:</strong> 3.7 / 4.0
+          </p>
           <p class="entry-card__body">
             Network Security &amp; Monitoring, Pen-testing &amp; Ethical Hacking, Cyber-AI,
             Software Assurance, Cryptography.
@@ -221,10 +224,13 @@
               </div>
             </div>
             <p class="entry-card__meta entry-card__meta--corner">
-              <span class="entry-card__meta-line">2019 — 2023</span>
+              <span class="entry-card__meta-line">Aug 2019 — Jul 2023</span>
               <span class="entry-card__meta-line entry-card__meta-line--secondary">India</span>
             </p>
           </div>
+          <p class="entry-card__body">
+            <strong>Grade:</strong> 7.7 / 10
+          </p>
         </article>
       </li>
       <li>
@@ -325,6 +331,7 @@
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP Top 10</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP ZAP</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/burpsuite.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Burp Suite</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><span class="skill-chip__mono">W</span></span><span class="skill-chip__label">Wireshark</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/opa.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OPA</span></span>
         </div>
       </section>
@@ -332,6 +339,7 @@
         <h2 class="skill-group-card__title">Identity &amp; SecOps</h2>
         <div class="skill-chips">
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/entra.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Entra ID</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender for Cloud</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender EDR</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sentinel.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Sentinel</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/splunk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Splunk</span></span>
@@ -397,14 +405,16 @@
           </div>
           <p class="entry-card__body">
             A security analytics platform linking MITRE CWE, NVD CVE, CAPEC and ATT&amp;CK —
-            deployed to Azure AKS via Terraform &amp; Helm, with ArgoCD and an 8-stage GitLab
-            CI pipeline running Semgrep, Trivy and CycloneDX SBOM.
+            deployed to Azure AKS via Terraform &amp; Helm, with ArgoCD, cert-manager and
+            External Secrets Operator, behind an 8-stage GitLab CI pipeline running Semgrep,
+            Trivy and CycloneDX SBOM.
           </p>
           <div class="entry-card__tags">
             <span class="tag">FastAPI</span><span class="tag">React</span>
             <span class="tag">Redis</span><span class="tag">Azure AKS</span>
             <span class="tag">Terraform</span><span class="tag">Helm</span>
-            <span class="tag">ArgoCD</span><span class="tag">GitLab CI</span>
+            <span class="tag">ArgoCD</span><span class="tag">cert-manager</span>
+            <span class="tag">External Secrets</span><span class="tag">GitLab CI</span>
           </div>
         </a>
       </li>
@@ -418,9 +428,10 @@
             <span class="entry-card__repo mono">reonbritto/AzureSOC</span>
           </div>
           <p class="entry-card__body">
-            A cloud honeynet luring live attack traffic into Microsoft Sentinel, with custom
-            KQL rules driving attack maps and alerts. NSG, firewall and Entra ID hardening
-            cut security incidents by over 90%.
+            A cloud honeynet — Windows and Linux VMs in Azure deliberately exposed to live
+            attack traffic, logs ingested into Log Analytics, and custom KQL rules in
+            Microsoft Sentinel driving attack maps and alerts. NSG, firewall and Entra ID
+            hardening cut security incidents by over 90%.
           </p>
           <div class="entry-card__tags">
             <span class="tag">Microsoft Sentinel</span><span class="tag">Log Analytics</span>
