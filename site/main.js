@@ -253,15 +253,134 @@
     });
   }
 
-  // 2. header route toggle: Belfast <> Bengaluru
-  var roleLine = document.querySelector(".site-header__role");
-  if (roleLine) {
-    roleLine.addEventListener("click", function (e) {
-      e.stopPropagation(); // don't trigger the brand's tab switch
-      roleLine.textContent = (roleLine.textContent.indexOf("Belfast") === 0)
-        ? "Bengaluru <> Belfast"
-        : "Belfast <> Bengaluru";
-    });
+  // 2. bongo cat. An original bongo-cat-style drawing that plays a slow C-pentatonic
+  //    tune synthesised with the Web Audio API — nothing is downloaded, so there is
+  //    no audio file to license. The paws land on the notes.
+  var bongo = document.getElementById("bongo");
+  var bongoBtn = document.getElementById("bongoBtn");
+  var AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (bongo && bongoBtn && AudioCtx) {
+    var pawL = bongo.querySelector(".bongo__paw--l");
+    var pawR = bongo.querySelector(".bongo__paw--r");
+    var keysL = bongo.querySelectorAll('.bongo__key[data-side="l"]');
+    var keysR = bongo.querySelectorAll('.bongo__key[data-side="r"]');
+    var playIcon = bongoBtn.querySelector(".bongo__btn-play");
+    var pauseIcon = bongoBtn.querySelector(".bongo__btn-pause");
+    var btnLabel = bongoBtn.querySelector(".bongo__btn-label");
+    var ctx = null, bus = null, master = null, timer = null, playing = false;
+    // C4 D4 E4 G4 A4 C5 D5 E5 G5 — nothing in a pentatonic scale can clash.
+    var SCALE = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99];
+    var BEAT = 60 / 64; // 64 bpm
+    var nextTime = 0, step = 4;
+
+    function impulse(seconds) {
+      var rate = ctx.sampleRate, len = Math.floor(rate * seconds);
+      var buf = ctx.createBuffer(2, len, rate);
+      for (var c = 0; c < 2; c++) {
+        var d = buf.getChannelData(c);
+        for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.6);
+      }
+      return buf;
+    }
+
+    function setup() {
+      ctx = new AudioCtx();
+      master = ctx.createGain(); master.gain.value = 0;
+      master.connect(ctx.destination);
+      // bus -> gentle lowpass -> dry + convolver reverb -> master
+      bus = ctx.createGain();
+      var tone = ctx.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 2400; tone.Q.value = 0.4;
+      var dry = ctx.createGain(); dry.gain.value = 0.85;
+      var verb = ctx.createConvolver(); verb.buffer = impulse(2.6);
+      var wet = ctx.createGain(); wet.gain.value = 0.38;
+      bus.connect(tone); tone.connect(dry); dry.connect(master);
+      tone.connect(verb); verb.connect(wet); wet.connect(master);
+      // a barely-there pad an octave down, breathing on a slow LFO
+      var pad = ctx.createGain(); pad.gain.value = 0.03; pad.connect(bus);
+      [130.81, 196.0].forEach(function (f) {
+        var o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = f; o.connect(pad); o.start();
+      });
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.08;
+      var lfoAmt = ctx.createGain(); lfoAmt.gain.value = 0.012;
+      lfo.connect(lfoAmt); lfoAmt.connect(pad.gain); lfo.start();
+    }
+
+    function note(freq, t, vel) {
+      var env = ctx.createGain();
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.exponentialRampToValueAtTime(vel, t + 0.025);
+      env.gain.exponentialRampToValueAtTime(0.0001, t + 1.9);
+      var o1 = ctx.createOscillator(); o1.type = "triangle"; o1.frequency.value = freq;
+      var o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = freq * 2;
+      var shimmer = ctx.createGain(); shimmer.gain.value = 0.18;
+      o1.connect(env); o2.connect(shimmer); shimmer.connect(env); env.connect(bus);
+      o1.start(t); o2.start(t); o1.stop(t + 2); o2.stop(t + 2);
+    }
+
+    function tap(side, when) {
+      var delay = Math.max(0, (when - ctx.currentTime) * 1000);
+      setTimeout(function () {
+        var paw = side === "l" ? pawL : pawR;
+        var keys = side === "l" ? keysL : keysR;
+        var key = keys[Math.floor(Math.random() * keys.length)];
+        paw.classList.add("is-down"); if (key) key.classList.add("is-lit");
+        setTimeout(function () { paw.classList.remove("is-down"); if (key) key.classList.remove("is-lit"); }, 130);
+      }, delay);
+    }
+
+    // Look-ahead scheduler: keep ~300ms of notes queued on the audio clock.
+    function schedule() {
+      while (nextTime < ctx.currentTime + 0.3) {
+        var move = [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)];
+        step = Math.max(0, Math.min(SCALE.length - 1, step + move));
+        if (Math.random() >= 0.22) { // ~1 beat in 5 is a rest
+          var vel = 0.16 + Math.random() * 0.08;
+          note(SCALE[step], nextTime, vel);
+          tap(step < 4 ? "l" : "r", nextTime);
+          if (step >= 3 && Math.random() < 0.3) { // a soft left-hand touch under it
+            note(SCALE[step - 3], nextTime + BEAT * 0.5, vel * 0.5);
+            tap("l", nextTime + BEAT * 0.5);
+          }
+        }
+        nextTime += BEAT * (Math.random() < 0.18 ? 1.5 : 1);
+      }
+    }
+
+    function setPlaying(on) {
+      playing = on;
+      bongo.classList.toggle("is-playing", on);
+      bongoBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      // SVG elements have no .hidden property; toggle the attribute the CSS keys off
+      playIcon.toggleAttribute("hidden", on); pauseIcon.toggleAttribute("hidden", !on);
+      btnLabel.textContent = on ? "Pause" : "Play a tune";
+    }
+
+    function start() {
+      if (!ctx) setup();
+      if (ctx.state === "suspended") ctx.resume();
+      setPlaying(true);
+      var now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(0.55, now + 1.2);
+      nextTime = now + 0.15;
+      schedule();
+      timer = setInterval(schedule, 100);
+    }
+
+    function stop() {
+      setPlaying(false);
+      clearInterval(timer); timer = null;
+      var now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(0, now + 0.7);
+    }
+
+    // Play/pause is the visitor's call — switching tabs does not stop the tune, same
+    // as any other player. Clicking the cat works too.
+    bongoBtn.addEventListener("click", function () { playing ? stop() : start(); });
+    bongo.querySelector(".bongo__svg").addEventListener("click", function () { playing ? stop() : start(); });
   }
 
   // 3. console note for fellow inspectors

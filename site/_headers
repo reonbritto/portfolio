@@ -11,6 +11,12 @@
 /assets/*
   Cache-Control: public, max-age=604800
 
-# Never cache the HTML so content updates show immediately
+# Never cache the HTML, script, or stylesheet so content updates show immediately.
+# main.js and styles.css had no rule, so browsers could heuristically cache them and
+# pair a fresh index.html with a stale script.
 /index.html
+  Cache-Control: public, max-age=0, must-revalidate
+/main.js
+  Cache-Control: public, max-age=0, must-revalidate
+/styles.css
   Cache-Control: public, max-age=0, must-revalidate
