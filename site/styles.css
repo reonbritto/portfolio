@@ -209,6 +209,19 @@ img { max-width: 100%; height: auto; }
   line-height: 1.7;
 }
 .about-copy--spaced { margin-top: 1rem; }
+.about-copy--hiya {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.about-hero__cat {
+  display: block;
+  width: min(100%, 22rem);
+  height: auto;
+  margin-top: 0.75rem;
+}
 
 .about-connect { margin-top: 2rem; font-size: 0.8125rem; }
 @media (min-width: 640px) { .about-connect { margin-top: 2.25rem; } }
@@ -499,6 +512,7 @@ img { max-width: 100%; height: auto; }
 .site-footer__line { margin: 0; }
 .site-footer__link { transition: color 0.15s; }
 .site-footer__link:hover { color: var(--text); }
+.site-footer__line--credit { margin-top: 0.3rem; font-size: 0.7rem; opacity: 0.75; }
 
 /* ---------------- résumé preview panel ---------------- */
 .resume-preview {

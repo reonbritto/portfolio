@@ -85,10 +85,10 @@
           <img src="assets/reon.jpg" alt="Reon Britto" class="about-hero__photo" width="242" height="242" decoding="async" />
         </div>
         <div class="about-hero__copy">
-          <p class="about-copy">Hiya — I'm Reon, a DevSecOps engineer who spends way too much time thinking about pipelines, cloud platforms, and how to fix things when they break.</p>
-          <p class="about-copy about-copy--spaced">After two years working with Azure DevOps and cloud infrastructure at Kyndryl in Bengaluru, I packed my bags and moved to the UK to dive deeper into security through an MSc in Applied Cyber Security at Queen's University Belfast. Lately, I've been focused on the space where cloud, automation, and security actually meet — building systems that are fast to ship but hard to break.</p>
-          <p class="about-copy about-copy--spaced">I specialize in CI/CD automation, Infrastructure as Code, and shifting security left so it's baked in from day one rather than bolted on at the end. My favorite kind of work involves taking messy, manual, fragile processes and turning them into clean, automated, reliable ones.</p>
-          <p class="about-copy about-copy--spaced">Off the clock, you'll find me messing around in a home lab breaking things to understand how they work, half-watching football, or falling down a browsing rabbit hole at 2am (no regrets).</p>
+          <p class="about-copy about-copy--hiya">Hiya</p>
+          <!-- "Transparent Cartoon Running Cat" by -SkyStar- (scratch.mit.edu/projects/1307379),
+               CC BY-SA 2.0, via Wikimedia Commons. Credited in the footer. -->
+          <img class="about-hero__cat" src="assets/hero-cat.gif" alt="A cartoon cat running" width="1000" height="703" decoding="async" />
         </div>
       </header>
 
@@ -314,8 +314,8 @@
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/powershell.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">PowerShell</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/prometheus.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Prometheus</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/grafana.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Grafana</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/prometheus.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Alertmanager</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/elk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">ELK</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/alertmanager.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Alertmanager</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/elastic.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">ELK</span></span>
         </div>
       </section>
       <section class="entry-card entry-card--static skill-group-card">
@@ -329,9 +329,9 @@
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/snyk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Snyk</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/trivy.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Trivy</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP Top 10</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/owasp.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP ZAP</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/zap.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OWASP ZAP</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/burpsuite.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Burp Suite</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><span class="skill-chip__mono">W</span></span><span class="skill-chip__label">Wireshark</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/wireshark.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Wireshark</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/opa.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">OPA</span></span>
         </div>
       </section>
@@ -339,8 +339,8 @@
         <h2 class="skill-group-card__title">Identity &amp; SecOps</h2>
         <div class="skill-chips">
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/entra.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Entra ID</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender for Cloud</span></span>
-          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender EDR</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender-cloud.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender for Cloud</span></span>
+          <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/defender-edr.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Defender EDR</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/sentinel.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Microsoft Sentinel</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/splunk.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">Splunk</span></span>
           <span class="skill-chip"><span class="skill-chip__logo"><img src="assets/logos/kql.svg" alt="" loading="lazy" /></span><span class="skill-chip__label">KQL</span></span>
@@ -492,6 +492,7 @@
     </div>
     <div class="site-footer__content">
       <p class="site-footer__line">© 2026 · Reon Britto · <a href="mailto:rbritto01@qub.ac.uk" class="site-footer__link">Contact</a></p>
+      <p class="site-footer__line site-footer__line--credit">Running cat by <a href="https://commons.wikimedia.org/wiki/File:Transparent_Cartoon_Running_Cat.gif" class="site-footer__link" target="_blank" rel="noopener noreferrer">-SkyStar-</a> · CC BY-SA 2.0</p>
     </div>
   </footer>
 
