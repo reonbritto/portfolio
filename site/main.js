@@ -8,58 +8,6 @@
   function panelFor(tab) { return document.getElementById(tab.getAttribute("aria-controls")); }
   function keyOf(tab) { return tab.id.replace(/^tab-/, ""); }
 
-  // per-tab footer skyline caption
-  var CAPTIONS = {
-    about:     "Now based in Belfast — home of Samson & Goliath.",
-    work:      "Two years of pipelines built between Bengaluru and Belfast.",
-    education: "Reading for an MSc under Belfast's shipyard cranes.",
-    skills:    "Every tool sharpened somewhere along this skyline.",
-    projects:  "Where the honeynets are set and the botnets get caught."
-  };
-  var caption = document.querySelector(".site-footer__skyline-caption");
-  var skylineHover = document.querySelector(".site-footer__skyline-hover");
-  var skylineBuildings = document.querySelector(".site-footer__skyline-buildings");
-
-  // per-tab skyline building sets (drawn inside the translate/scale group; baseline y=80)
-  var SKYLINES = {
-    about: // Belfast — Samson & Goliath cranes + City Hall dome
-      '<polyline points="470,80 470,20 560,20 560,80"></polyline><line x1="470" y1="34" x2="560" y2="34"></line>' +
-      '<line x1="515" y1="20" x2="515" y2="34"></line><polyline points="590,80 590,30 660,30 660,80"></polyline>' +
-      '<line x1="590" y1="42" x2="660" y2="42"></line><rect x="700" y="55" width="80" height="25"></rect>' +
-      '<path d="M 720 55 C 720 38, 760 38, 760 55"></path><line x1="740" y1="30" x2="740" y2="41"></line>' +
-      '<rect x="820" y="60" width="24" height="20"></rect><rect x="852" y="52" width="24" height="28"></rect><rect x="884" y="62" width="24" height="18"></rect>',
-    work: // Bengaluru — Vidhana Soudha + tech towers
-      '<rect x="470" y="46" width="120" height="34"></rect><path d="M 500 46 C 500 30, 560 30, 560 46"></path>' +
-      '<line x1="530" y1="24" x2="530" y2="34"></line><rect x="620" y="34" width="30" height="46"></rect>' +
-      '<rect x="660" y="24" width="30" height="56"></rect><rect x="700" y="44" width="30" height="36"></rect>' +
-      '<rect x="770" y="38" width="26" height="42"></rect><line x1="783" y1="38" x2="783" y2="26"></line>' +
-      '<rect x="820" y="52" width="90" height="28"></rect>',
-    education: // Belfast — Queen’s Lanyon Building towers
-      '<rect x="500" y="40" width="140" height="40"></rect><rect x="520" y="24" width="28" height="16"></rect>' +
-      '<rect x="592" y="24" width="28" height="16"></rect><path d="M 520 24 L 534 12 L 548 24"></path>' +
-      '<path d="M 592 24 L 606 12 L 620 24"></path><rect x="560" y="30" width="20" height="50"></rect>' +
-      '<path d="M 560 30 L 570 18 L 580 30"></path><rect x="700" y="54" width="90" height="26"></rect><rect x="810" y="60" width="70" height="20"></rect>',
-    skills: // toolkit — mixed towers + antenna
-      '<rect x="480" y="44" width="34" height="36"></rect><rect x="524" y="30" width="34" height="50"></rect>' +
-      '<rect x="568" y="52" width="34" height="28"></rect><line x1="640" y1="80" x2="640" y2="18"></line>' +
-      '<line x1="640" y1="28" x2="652" y2="36"></line><line x1="640" y1="28" x2="628" y2="36"></line>' +
-      '<rect x="700" y="40" width="30" height="40"></rect><rect x="740" y="56" width="30" height="24"></rect>' +
-      '<rect x="800" y="48" width="90" height="32"></rect>',
-    projects: // labs / servers — stacked racks + radar
-      '<rect x="480" y="40" width="60" height="40"></rect><line x1="480" y1="53" x2="540" y2="53"></line>' +
-      '<line x1="480" y1="66" x2="540" y2="66"></line><rect x="560" y="48" width="60" height="32"></rect>' +
-      '<line x1="560" y1="60" x2="620" y2="60"></line><circle cx="700" cy="58" r="18" fill="none"></circle>' +
-      '<circle cx="700" cy="58" r="9" fill="none"></circle><line x1="700" y1="58" x2="716" y2="46"></line>' +
-      '<rect x="770" y="50" width="120" height="30"></rect>',
-  };
-
-  function setCaption(key) {
-    var text = CAPTIONS[key] || CAPTIONS.about;
-    if (caption) caption.textContent = text;
-    if (skylineHover) skylineHover.setAttribute("aria-label", text);
-    if (skylineBuildings && SKYLINES[key]) skylineBuildings.innerHTML = SKYLINES[key];
-  }
-
   function activate(tab, push) {
     tabs.forEach(function (t) {
       var on = t === tab;
@@ -68,7 +16,6 @@
       t.tabIndex = on ? 0 : -1;
     });
     panels.forEach(function (p) { p.hidden = p !== panelFor(tab); });
-    setCaption(keyOf(tab));
     if (push) {
       var k = keyOf(tab);
       try {
@@ -108,10 +55,6 @@
 
   var initial = fromHash();
   if (initial) activate(initial, false);
-  else {
-    var active = document.querySelector('[role="tab"][aria-selected="true"]') || tabs[0];
-    setCaption(keyOf(active));
-  }
 
   /* ---------- connect hover previews (résumé · LinkedIn · GitHub) ---------- */
   var preview = document.getElementById("connectPreview");
