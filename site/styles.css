@@ -192,7 +192,7 @@ img { max-width: 100%; height: auto; }
   margin-bottom: 0.5rem;
 }
 @media (min-width: 560px) {
-  .about-hero { flex-direction: row; align-items: center; gap: 2rem; }
+  .about-hero { flex-direction: row; align-items: center; gap: 2.25rem; }
 }
 .about-hero__media { flex: none; width: 15.125rem; margin: 0; }
 .about-hero__photo {
@@ -208,14 +208,15 @@ img { max-width: 100%; height: auto; }
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
+/* "Hiya", the cat and the player read as one centred cluster next to the photo */
 .about-hero__copy {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
+  max-width: 100%;
 }
-@media (min-width: 560px) { .about-hero__copy { align-items: flex-start; } }
 .about-copy {
   color: var(--muted);
   overflow-wrap: break-word;
@@ -245,51 +246,89 @@ img { max-width: 100%; height: auto; }
   background: var(--coral);
   transform: translateX(-50%);
 }
-@media (min-width: 560px) { .about-copy--hiya::after { left: 0; transform: none; } }
 
 /* ---------------- bongo cat ---------------- */
 .bongo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
-  width: min(100%, 20rem);
-  margin-top: 0.9rem;
+  gap: 0.5rem;
+  width: min(100%, 19rem);
+  margin-top: 0.35rem;
 }
-@media (min-width: 560px) { .bongo { align-items: flex-start; } }
 .bongo__svg { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; }
 .bongo__body { animation: bongo-bob 2.8s ease-in-out infinite; }
-.bongo.is-playing .bongo__body { animation-duration: 1.45s; }
+.bongo.is-playing .bongo__body { animation-duration: 1.4s; }
 @keyframes bongo-bob {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(2.5px); }
 }
-.bongo__paw { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.08s ease-out; }
-.bongo__paw.is-down { transform: translateY(11px) scaleY(0.82); }
+/* snappy down, softer up - the meme's whole personality is in the slam */
+.bongo__paw { transform-box: fill-box; transform-origin: 50% 50%; transition: transform 0.12s ease-out; }
+.bongo__paw.is-down { transform: translateY(13px) scaleY(0.8); transition-duration: 0.04s; }
+.bongo__hit { opacity: 0; transition: opacity 0.05s; }
+.bongo__paw.is-down .bongo__hit { opacity: 1; }
 .bongo__key { fill: var(--card); stroke: var(--border); stroke-width: 1; transition: fill 0.12s, stroke 0.12s; }
 .bongo__key.is-lit { fill: var(--coral-soft); stroke: var(--coral); }
-.bongo__btn {
-  display: inline-flex;
+
+/* player bar sits right under the keyboard */
+.bongo__player {
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.42rem 0.95rem 0.42rem 0.8rem;
+  gap: 0.35rem;
+  max-width: 100%;
+  padding: 0.3rem 0.45rem 0.3rem 0.35rem;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--card);
-  color: var(--muted);
-  font-size: 0.8125rem;
-  font-weight: 500;
+}
+.bongo__btn,
+.bongo__next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 0;
+  border-radius: 999px;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
 }
-.bongo__btn:hover { color: var(--text); border-color: color-mix(in srgb, var(--coral) 45%, var(--border)); }
-.bongo__btn[aria-pressed="true"] {
-  color: var(--coral);
-  background: var(--coral-soft);
-  border-color: color-mix(in srgb, var(--coral) 55%, var(--border));
+.bongo__btn {
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
 }
+.bongo__btn:hover { border-color: var(--coral); color: var(--coral); }
+.bongo__btn[aria-pressed="true"] { color: #fff; background: var(--coral); border-color: var(--coral); }
 .bongo__btn svg { width: 11px; height: 11px; }
 .bongo__btn svg[hidden] { display: none; }
+.bongo__track {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 0.3rem 0 0.2rem;
+  line-height: 1.15;
+}
+.bongo__track-name {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.bongo__track-idx { color: var(--muted); font-size: 0.6875rem; letter-spacing: 0.04em; }
+.bongo__next {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--muted);
+}
+.bongo__next:hover { color: var(--text); background: var(--bg); border-color: var(--border); }
+.bongo__next svg { width: 11px; height: 11px; }
 
 .about-connect { margin-top: 2rem; font-size: 0.8125rem; }
 @media (min-width: 640px) { .about-connect { margin-top: 2.25rem; } }

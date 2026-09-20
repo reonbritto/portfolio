@@ -253,25 +253,47 @@
     });
   }
 
-  // 2. bongo cat. An original bongo-cat-style drawing that plays a slow C-pentatonic
-  //    tune synthesised with the Web Audio API — nothing is downloaded, so there is
-  //    no audio file to license. The paws land on the notes.
+  // 2. bongo cat. An original drawing in the bongo-cat meme style that plays five
+  //    short generated tunes, synthesised with the Web Audio API. Nothing is
+  //    downloaded, so there is no audio file to license. The paws land on the notes.
   var bongo = document.getElementById("bongo");
   var bongoBtn = document.getElementById("bongoBtn");
+  var bongoNext = document.getElementById("bongoNext");
   var AudioCtx = window.AudioContext || window.webkitAudioContext;
-  if (bongo && bongoBtn && AudioCtx) {
+  if (bongo && bongoBtn && bongoNext && AudioCtx) {
     var pawL = bongo.querySelector(".bongo__paw--l");
     var pawR = bongo.querySelector(".bongo__paw--r");
     var keysL = bongo.querySelectorAll('.bongo__key[data-side="l"]');
     var keysR = bongo.querySelectorAll('.bongo__key[data-side="r"]');
     var playIcon = bongoBtn.querySelector(".bongo__btn-play");
     var pauseIcon = bongoBtn.querySelector(".bongo__btn-pause");
-    var btnLabel = bongoBtn.querySelector(".bongo__btn-label");
-    var ctx = null, bus = null, master = null, timer = null, playing = false;
-    // C4 D4 E4 G4 A4 C5 D5 E5 G5 — nothing in a pentatonic scale can clash.
-    var SCALE = [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99];
-    var BEAT = 60 / 64; // 64 bpm
-    var nextTime = 0, step = 4;
+    var trackName = document.getElementById("bongoTrack");
+    var trackIdx = document.getElementById("bongoIdx");
+    var ctx = null, bus = null, tone = null, master = null, pad = null, padOscs = [];
+    var timer = null, playing = false, switching = false;
+
+    // Every scale here is pentatonic, so a random walk cannot land on a sour note.
+    var TUNES = [
+      { name: "Morning Pune", bpm: 64, style: "walk", cutoff: 2400, rest: 0.22, decay: 1.9, o1: "triangle", shimmer: 0.18, padGain: 0.03,
+        scale: [261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99], pad: [130.81, 196.0] },          // C major
+      { name: "Udupi Rain", bpm: 54, style: "walk", cutoff: 1700, rest: 0.32, decay: 2.5, o1: "sine", shimmer: 0.1, padGain: 0.035,
+        scale: [220.0, 261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25], pad: [110.0, 164.81] },          // A minor
+      { name: "Monsoon Lo-fi", bpm: 72, style: "swing", cutoff: 1500, rest: 0.16, decay: 1.4, o1: "triangle", shimmer: 0.12, padGain: 0.03,
+        scale: [174.61, 196.0, 220.0, 261.63, 293.66, 349.23, 392.0, 440.0, 523.25], pad: [87.31, 130.81] },           // F major
+      { name: "Night Ferry", bpm: 58, style: "walk", cutoff: 2000, rest: 0.26, decay: 2.2, o1: "triangle", shimmer: 0.14, padGain: 0.05,
+        scale: [164.81, 196.0, 220.0, 246.94, 293.66, 329.63, 392.0, 440.0, 493.88], pad: [82.41, 123.47] },           // E minor
+      { name: "Filter Coffee", bpm: 88, style: "arp", cutoff: 3200, rest: 0.1, decay: 1.2, o1: "triangle", shimmer: 0.28, padGain: 0.02,
+        scale: [196.0, 220.0, 246.94, 293.66, 329.63, 392.0, 440.0, 493.88, 587.33], pad: [98.0, 146.83] }             // G major
+    ];
+    var TUNE_SECONDS = 48;
+    var tuneIdx = 0, tune = TUNES[0], tuneStart = 0, nextTime = 0, step = 4, dir = 1, run = 0;
+
+    function beat() { return 60 / tune.bpm; }
+
+    function showTune() {
+      trackName.textContent = tune.name;
+      trackIdx.textContent = (tuneIdx + 1) + " / " + TUNES.length;
+    }
 
     function impulse(seconds) {
       var rate = ctx.sampleRate, len = Math.floor(rate * seconds);
@@ -287,18 +309,19 @@
       ctx = new AudioCtx();
       master = ctx.createGain(); master.gain.value = 0;
       master.connect(ctx.destination);
-      // bus -> gentle lowpass -> dry + convolver reverb -> master
+      // bus -> lowpass -> dry + convolver reverb -> master
       bus = ctx.createGain();
-      var tone = ctx.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = 2400; tone.Q.value = 0.4;
+      tone = ctx.createBiquadFilter(); tone.type = "lowpass"; tone.frequency.value = tune.cutoff; tone.Q.value = 0.4;
       var dry = ctx.createGain(); dry.gain.value = 0.85;
       var verb = ctx.createConvolver(); verb.buffer = impulse(2.6);
       var wet = ctx.createGain(); wet.gain.value = 0.38;
       bus.connect(tone); tone.connect(dry); dry.connect(master);
       tone.connect(verb); verb.connect(wet); wet.connect(master);
-      // a barely-there pad an octave down, breathing on a slow LFO
-      var pad = ctx.createGain(); pad.gain.value = 0.03; pad.connect(bus);
-      [130.81, 196.0].forEach(function (f) {
+      // a barely-there two-note pad under everything, breathing on a slow LFO
+      pad = ctx.createGain(); pad.gain.value = tune.padGain; pad.connect(bus);
+      tune.pad.forEach(function (f) {
         var o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = f; o.connect(pad); o.start();
+        padOscs.push(o);
       });
       var lfo = ctx.createOscillator(); lfo.frequency.value = 0.08;
       var lfoAmt = ctx.createGain(); lfoAmt.gain.value = 0.012;
@@ -309,12 +332,12 @@
       var env = ctx.createGain();
       env.gain.setValueAtTime(0.0001, t);
       env.gain.exponentialRampToValueAtTime(vel, t + 0.025);
-      env.gain.exponentialRampToValueAtTime(0.0001, t + 1.9);
-      var o1 = ctx.createOscillator(); o1.type = "triangle"; o1.frequency.value = freq;
+      env.gain.exponentialRampToValueAtTime(0.0001, t + tune.decay);
+      var o1 = ctx.createOscillator(); o1.type = tune.o1; o1.frequency.value = freq;
       var o2 = ctx.createOscillator(); o2.type = "sine"; o2.frequency.value = freq * 2;
-      var shimmer = ctx.createGain(); shimmer.gain.value = 0.18;
+      var shimmer = ctx.createGain(); shimmer.gain.value = tune.shimmer;
       o1.connect(env); o2.connect(shimmer); shimmer.connect(env); env.connect(bus);
-      o1.start(t); o2.start(t); o1.stop(t + 2); o2.stop(t + 2);
+      o1.start(t); o2.start(t); o1.stop(t + tune.decay + 0.1); o2.stop(t + tune.decay + 0.1);
     }
 
     function tap(side, when) {
@@ -324,39 +347,95 @@
         var keys = side === "l" ? keysL : keysR;
         var key = keys[Math.floor(Math.random() * keys.length)];
         paw.classList.add("is-down"); if (key) key.classList.add("is-lit");
-        setTimeout(function () { paw.classList.remove("is-down"); if (key) key.classList.remove("is-lit"); }, 130);
+        setTimeout(function () { paw.classList.remove("is-down"); if (key) key.classList.remove("is-lit"); }, 120);
       }, delay);
     }
 
+    function hit(i, t, vel) {
+      note(tune.scale[i], t, vel);
+      tap(i < tune.scale.length / 2 ? "l" : "r", t);
+    }
+
+    function clamp(i) { return Math.max(0, Math.min(tune.scale.length - 1, i)); }
+
     // Look-ahead scheduler: keep ~300ms of notes queued on the audio clock.
     function schedule() {
+      if (!switching && ctx.currentTime - tuneStart > TUNE_SECONDS) nextTune();
+      var B = beat();
       while (nextTime < ctx.currentTime + 0.3) {
-        var move = [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)];
-        step = Math.max(0, Math.min(SCALE.length - 1, step + move));
-        if (Math.random() >= 0.22) { // ~1 beat in 5 is a rest
-          var vel = 0.16 + Math.random() * 0.08;
-          note(SCALE[step], nextTime, vel);
-          tap(step < 4 ? "l" : "r", nextTime);
-          if (step >= 3 && Math.random() < 0.3) { // a soft left-hand touch under it
-            note(SCALE[step - 3], nextTime + BEAT * 0.5, vel * 0.5);
-            tap("l", nextTime + BEAT * 0.5);
+        var vel = 0.16 + Math.random() * 0.08;
+        if (tune.style === "arp") {
+          // short runs up or down at eighth-note spacing, then a breath
+          if (run === 0) {
+            if (Math.random() < 0.5) dir = -dir;
+            step = clamp(step + (Math.random() < 0.5 ? -2 : 2));
+            run = 3 + Math.floor(Math.random() * 3);
+            if (Math.random() < tune.rest) { nextTime += B; continue; }
           }
+          hit(step, nextTime, vel);
+          step = clamp(step + dir); run--;
+          nextTime += run === 0 ? B : B / 2;
+        } else if (tune.style === "swing") {
+          // a note on the beat, often a swung one after it, sometimes a third on top
+          step = clamp(step + [-2, -1, 0, 1, 1, 2][Math.floor(Math.random() * 6)]);
+          if (Math.random() >= tune.rest) {
+            hit(step, nextTime, vel);
+            if (Math.random() < 0.25 && step + 2 < tune.scale.length) note(tune.scale[step + 2], nextTime, vel * 0.5);
+            if (Math.random() < 0.55) { step = clamp(step + (Math.random() < 0.5 ? -1 : 1)); hit(step, nextTime + B * 0.62, vel * 0.75); }
+          }
+          nextTime += B;
+        } else {
+          // walk: a random walk biased to small steps, with a soft note underneath now and then
+          step = clamp(step + [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)]);
+          if (Math.random() >= tune.rest) {
+            hit(step, nextTime, vel);
+            if (step >= 3 && Math.random() < 0.3) hit(step - 3, nextTime + B * 0.5, vel * 0.5);
+          }
+          nextTime += B * (Math.random() < 0.18 ? 1.5 : 1);
         }
-        nextTime += BEAT * (Math.random() < 0.18 ? 1.5 : 1);
       }
+    }
+
+    function selectTune(i) {
+      tuneIdx = (i + TUNES.length) % TUNES.length;
+      tune = TUNES[tuneIdx];
+      step = Math.floor(tune.scale.length / 2); dir = 1; run = 0;
+      showTune();
+      if (ctx) {
+        var now = ctx.currentTime;
+        tone.frequency.setTargetAtTime(tune.cutoff, now, 0.25);
+        pad.gain.setTargetAtTime(tune.padGain, now, 0.4);
+        padOscs.forEach(function (o, k) { o.frequency.setTargetAtTime(tune.pad[k], now, 0.4); });
+        tuneStart = now;
+      }
+    }
+
+    function nextTune() {
+      if (!playing) { selectTune(tuneIdx + 1); return; }
+      switching = true;
+      tuneStart = ctx.currentTime;
+      var now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(0.06, now + 0.5);
+      master.gain.linearRampToValueAtTime(0.55, now + 1.7);
+      setTimeout(function () {
+        if (playing) { selectTune(tuneIdx + 1); nextTime = Math.max(nextTime, ctx.currentTime + 0.4); }
+        switching = false;
+      }, 500);
     }
 
     function setPlaying(on) {
       playing = on;
       bongo.classList.toggle("is-playing", on);
       bongoBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      bongoBtn.setAttribute("aria-label", on ? "Pause" : "Play");
       // SVG elements have no .hidden property; toggle the attribute the CSS keys off
       playIcon.toggleAttribute("hidden", on); pauseIcon.toggleAttribute("hidden", !on);
-      btnLabel.textContent = on ? "Pause" : "Play a tune";
     }
 
     function start() {
-      if (!ctx) setup();
+      if (!ctx) { setup(); tuneStart = ctx.currentTime; }
       if (ctx.state === "suspended") ctx.resume();
       setPlaying(true);
       var now = ctx.currentTime;
@@ -377,10 +456,22 @@
       master.gain.linearRampToValueAtTime(0, now + 0.7);
     }
 
-    // Play/pause is the visitor's call — switching tabs does not stop the tune, same
-    // as any other player. Clicking the cat works too.
+    showTune();
+    // Play/pause is the visitor's call: switching tabs does not stop the tune, same
+    // as any other player. Clicking the cat toggles it too.
     bongoBtn.addEventListener("click", function () { playing ? stop() : start(); });
     bongo.querySelector(".bongo__svg").addEventListener("click", function () { playing ? stop() : start(); });
+    bongoNext.addEventListener("click", nextTune);
+  }
+
+  // 2b. header route toggle: Pune <> Udupi
+  var roleLine = document.querySelector(".site-header__role");
+  if (roleLine) {
+    roleLine.addEventListener("click", function (e) {
+      e.stopPropagation(); // don't trigger the brand's tab switch
+      var parts = roleLine.textContent.split(" <> ");
+      if (parts.length === 2) roleLine.textContent = parts[1] + " <> " + parts[0];
+    });
   }
 
   // 3. console note for fellow inspectors
