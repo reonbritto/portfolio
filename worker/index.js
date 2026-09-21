@@ -14,8 +14,19 @@
 
 const ALLOWED_ORIGIN = "https://reondev.top";
 
+// Site switch. While true, every request gets a 503 - the assets layer is bypassed
+// via run_worker_first in wrangler.jsonc. Flip to false (or revert the commit) to
+// bring the site back.
+const OFFLINE = true;
+
 export default {
   async fetch(request, env) {
+    if (OFFLINE) {
+      return new Response("reondev.top is offline.", {
+        status: 503,
+        headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store", "Retry-After": "3600" },
+      });
+    }
     const url = new URL(request.url);
 
     if (url.pathname === "/api/hello") {
