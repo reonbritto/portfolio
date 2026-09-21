@@ -530,6 +530,8 @@
       }
       g.appendChild(div);
       requestAnimationFrame(function () { div.classList.add("is-in"); });
+      if (signals.length) score(); // async rows land after the first count
+      return dd;
     }
 
     function signal(tone, text, key) {
@@ -580,6 +582,62 @@
     document.addEventListener("touchmove", onMove, { passive: true });
 
     /* ---- client-side facts ---- */
+    /* ---- the creepy-but-public extras ---- */
+    function fmtGb(bytes) { return bytes >= 1e12 ? (bytes / 1e12).toFixed(1) + " TB" : Math.round(bytes / 1e9) + " GB"; }
+    function fmtDur(ms) { var sec = Math.floor(ms / 1000), min = Math.floor(sec / 60); return (min ? min + " m " : "") + (sec % 60) + " s"; }
+    function keyboardLayout() {
+      if (!(navigator.keyboard && navigator.keyboard.getLayoutMap)) return Promise.resolve(null);
+      return navigator.keyboard.getLayoutMap().then(function (map) {
+        var q = map.get("KeyQ"), y = map.get("KeyY"), a = map.get("KeyA"), bs = map.get("Backslash");
+        if (q === "q" && y === "z") return "QWERTZ (German-style)";
+        if (a === "q") return "AZERTY (French-style)";
+        if (q === "q") return bs === "#" ? "UK QWERTY" : "US QWERTY";
+        return q ? "unknown (Q gives " + q + ")" : null;
+      }).catch(function () { return null; });
+    }
+    function battery() {
+      if (!navigator.getBattery) return Promise.resolve(null);
+      return navigator.getBattery().then(function (b) {
+        return Math.round(b.level * 100) + "% \u00b7 " + (b.charging ? "charging" : "on battery");
+      }).catch(function () { return null; });
+    }
+    function mediaDevices() {
+      if (!(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)) return Promise.resolve(null);
+      return navigator.mediaDevices.enumerateDevices().then(function (list) {
+        if (!list.length) return null;
+        var n = { audioinput: 0, videoinput: 0, audiooutput: 0 };
+        list.forEach(function (d) { if (d.kind in n) n[d.kind]++; });
+        var pl = function (c, w) { return c + " " + w + (c === 1 ? "" : "s"); };
+        return pl(n.audioinput, "mic") + " \u00b7 " + pl(n.videoinput, "camera") + " \u00b7 " + pl(n.audiooutput, "speaker");
+      }).catch(function () { return null; });
+    }
+    function storageQuota() {
+      if (!(navigator.storage && navigator.storage.estimate)) return Promise.resolve(null);
+      return navigator.storage.estimate().then(function (e) { return e.quota ? fmtGb(e.quota) : null; }).catch(function () { return null; });
+    }
+    function adBlocker() {
+      return new Promise(function (resolve) {
+        var bait = document.createElement("div");
+        bait.className = "ad-banner adsbox ad-placement textads";
+        bait.setAttribute("aria-hidden", "true");
+        bait.style.cssText = "position:absolute;left:-9999px;top:0;width:1px;height:1px;";
+        bait.innerHTML = "&nbsp;";
+        document.body.appendChild(bait);
+        setTimeout(function () {
+          var blocked = !bait.offsetParent || bait.offsetHeight === 0 || getComputedStyle(bait).display === "none";
+          bait.remove();
+          resolve(blocked);
+        }, 300);
+      });
+    }
+    function arrival() {
+      var host = null;
+      try { if (document.referrer) host = new URL(document.referrer).hostname; } catch (e) {}
+      var nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+      var how = { navigate: "a fresh visit", reload: "a reload", back_forward: "back/forward", prerender: "prerendered" }[nav.type] || null;
+      return (host ? "from " + host : "no referrer \u2014 typed, bookmarked, or an app") + (how ? " \u00b7 " + how : "");
+    }
+
     function uaSummary() {
       var ua = navigator.userAgent || "", d = navigator.userAgentData, brand = null, ver = null;
       if (d && d.brands) d.brands.forEach(function (b) { if (!/Not|Chromium/.test(b.brand)) { brand = b.brand; ver = b.version; } });
@@ -659,6 +717,8 @@
       }).then(function (data) {
         edge = data;
         device.fetchMs = Math.round(performance.now() - t0);
+        var serverAt = data && data.at ? Date.parse(data.at) : NaN;
+        if (!isNaN(serverAt)) device.skewMs = Math.round(Date.now() - (serverAt + device.fetchMs / 2));
         render();
       }).catch(function () {
         setStatus("● couldn't reach the edge — showing what this browser knows", "warn");
@@ -699,7 +759,7 @@
       /* network & place */
       row("net", "Address", e.ip, /:/.test(e.ip || "") ? "IPv6. Your ISP hands out a block; the second half is your device or router." : "IPv4. Probably shared with other customers behind carrier NAT.");
       row("net", "Network", net.asOrganization ? net.asOrganization + (net.asn ? " · AS" + net.asn : "") : null, "The autonomous system announcing your address. This is who bot detection means by 'residential' or 'data centre'.");
-      row("net", "Location", [geo.city, geo.region, geo.country].filter(Boolean).join(", ") || null, "City-level IP geolocation from Cloudflare's database — a guess about your ISP's routing, not GPS." + (geo.isEUCountry ? " Flagged as EU for GDPR purposes." : ""));
+      row("net", "Location", [geo.city, geo.region, geo.country === "T1" ? "Tor exit" : geo.country].filter(Boolean).join(", ") || null, "City-level IP geolocation from Cloudflare's database — a guess about your ISP's routing, not GPS." + (geo.isEUCountry ? " Flagged as EU for GDPR purposes." : ""));
       row("net", "Coordinates", geo.latitude != null ? geo.latitude + ", " + geo.longitude + " (approx)" : null, "Rounded to one decimal, which is about 10 km. That is all IP geolocation is good for.");
       row("net", "Timezone (IP)", geo.timezone, "What your location implies your clock should say. Compared below with what your browser actually reports.");
 
@@ -722,6 +782,7 @@
       row("dev", "Preferences", (mq("(prefers-color-scheme: dark)") ? "dark theme" : "light theme") + (mq("(prefers-reduced-motion: reduce)") ? " · reduced motion" : ""), "System preferences leak through CSS media queries.");
 
       /* signals: the cross-checks */
+      if (geo.country === "T1") signal("notice", "You're on Tor — Cloudflare tags exit nodes as country T1.");
       if (geo.timezone && clockTz) {
         if (geo.timezone === clockTz) signal("ok", "Your clock agrees with your IP (" + clockTz + ").");
         else signal("notice", "IP says " + geo.timezone + " but your clock says " + clockTz + " — VPN, proxy, or travelling?");
@@ -750,6 +811,28 @@
       if (rtt && device.fetchMs != null && device.fetchMs < rtt.v * 0.5) signal("notice", "Your fetch came back in half the edge's own RTT measurement — something nearer than Cloudflare is answering.");
       setTimeout(function () { if (!motionSignalled) signal("notice", "No pointer movement in eight seconds — bots don't fidget. Move the mouse to clear this.", "still"); }, 8000);
       score();
+
+      /* the extras */
+      if (device.skewMs != null) row("edge", "Clock skew", Math.abs(device.skewMs) < 300 ? "in sync (\u00b10.3 s)" : (device.skewMs > 0 ? "+" : "-") + (Math.abs(device.skewMs) / 1000).toFixed(1) + " s " + (device.skewMs > 0 ? "fast" : "slow"), "Your clock against Cloudflare's, allowing half the round trip.");
+      row("net", "Reverse DNS", net.reverseDns, "Your ISP's name for your address \u2014 often the exchange or town.");
+      if ("isExtended" in screen) row("dev", "Monitors", screen.isExtended ? "more than one" : "one", "screen.isExtended. No permission needed.");
+      battery().then(function (v) { if (v) row("dev", "Battery", v, "Any page can read this in Chrome. Firefox and Safari removed it."); });
+      mediaDevices().then(function (v) { if (v) row("dev", "Media devices", v, "Counts only \u2014 names need permission."); });
+      storageQuota().then(function (v) { if (v) row("dev", "Storage offered", v, "What the browser would let this site store. Chrome sizes it from your disk."); });
+      keyboardLayout().then(function (v) { if (v) row("dev", "Keyboard", v, "From the layout map. No permission needed."); });
+      adBlocker().then(function (on) { row("dev", "Ad blocker", on ? "on" : "none detected", "A bait element that blockers hide."); });
+      row("visit", "Arrival", arrival(), "The referrer your browser sent, and how you navigated.");
+      var liveDd = row("visit", "On this page", "0 s \u00b7 scrolled 0%", "Since this page loaded, and how far down you've been.");
+      if (liveDd) {
+        var maxDepth = 0;
+        var tick = function () {
+          var depth = Math.min(100, Math.round((scrollY + innerHeight) / Math.max(1, document.documentElement.scrollHeight) * 100));
+          if (depth > maxDepth) maxDepth = depth;
+          liveDd.textContent = fmtDur(performance.now()) + " \u00b7 scrolled " + maxDepth + "%";
+        };
+        tick(); setInterval(tick, 1000);
+        addEventListener("scroll", tick, { passive: true });
+      }
 
       /* fingerprint */
       var parts = {

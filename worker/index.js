@@ -22,14 +22,14 @@ export default {
       if (request.method !== "GET" && request.method !== "HEAD") {
         return json({ error: "method_not_allowed" }, 405, { Allow: "GET, HEAD" });
       }
-      return json(reflect(request), 200);
+      return json(await reflect(request), 200);
     }
 
     return env.ASSETS.fetch(request);
   },
 };
 
-function reflect(request) {
+async function reflect(request) {
   const cf = request.cf || {};
   const h = request.headers;
   const num = (v) => (typeof v === "number" && Number.isFinite(v) ? v : null);
@@ -58,6 +58,7 @@ function reflect(request) {
     network: {
       asn: num(cf.asn),
       asOrganization: str(cf.asOrganization),
+      reverseDns: await reverseDns(str(h.get("cf-connecting-ip"))),
     },
     geo: {
       continent: str(cf.continent),
@@ -86,6 +87,41 @@ function reflect(request) {
       referer: str(h.get("referer")),
     },
   };
+}
+
+// PTR record for the visitor's address, via Cloudflare's DNS-over-HTTPS. Public
+// data; most ISPs encode the exchange or town in it. Null if there isn't one.
+async function reverseDns(ip) {
+  if (!ip) return null;
+  let name;
+  if (ip.includes(":")) {
+    const full = expand6(ip);
+    if (!full) return null;
+    name = full.split("").reverse().join(".") + ".ip6.arpa";
+  } else {
+    name = ip.split(".").reverse().join(".") + ".in-addr.arpa";
+  }
+  try {
+    const r = await fetch("https://cloudflare-dns.com/dns-query?name=" + name + "&type=PTR", {
+      headers: { accept: "application/dns-json" },
+      signal: AbortSignal.timeout(1500),
+    });
+    const j = await r.json();
+    const ans = (j.Answer || []).find((a) => a.type === 12);
+    return ans ? String(ans.data).replace(/\.$/, "") : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function expand6(ip) {
+  const halves = ip.split("::");
+  if (halves.length > 2) return null;
+  const head = halves[0] ? halves[0].split(":") : [];
+  const tail = halves.length === 2 && halves[1] ? halves[1].split(":") : [];
+  const groups = halves.length === 2 ? head.concat(Array(8 - head.length - tail.length).fill("0"), tail) : head;
+  if (groups.length !== 8 || groups.some((g) => !/^[0-9a-f]{1,4}$/i.test(g))) return null;
+  return groups.map((g) => g.padStart(4, "0")).join("");
 }
 
 function json(body, status, extra) {
