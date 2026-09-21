@@ -731,6 +731,11 @@
         if (langRegion.toUpperCase() === geo.country) signal("ok", "Language region " + navigator.language + " matches the IP country.");
         else signal("notice", "Language region " + navigator.language + ", IP country " + geo.country + " — common for expats, VPNs and default installs.");
       }
+      // Hosting-provider ASN: the single strongest tell bot management has for VPNs and proxies.
+      var org = (net.asOrganization || "").trim();
+      if (/\b(host|hosting|vps|servers?|datacent(er|re)|data cent(er|re)|colo|dedicated|digitalocean|hetzner|ovh|linode|vultr|leaseweb|m247|choopa|contabo|scaleway|upcloud|ionos|amazon|aws|azure|microsoft corp|google (cloud|llc)|oracle|alibaba|tencent)\b/i.test(org)) signal("notice", "Your address belongs to a hosting provider (" + org + "), not a home ISP — VPN or proxy.");
+      // RTT asymmetry: a box next to Cloudflare answering fast, with you far behind it.
+      if (rtt && device.fetchMs != null && device.fetchMs > rtt.v * 8 + 300) signal("notice", "Edge RTT " + rtt.v + " ms but your round trip is " + device.fetchMs + " ms — something next to Cloudflare is relaying for you.");
       if (ed.httpProtocol === "HTTP/3") signal("ok", "HTTP/3 over QUIC — the modern path.");
       else if (ed.httpProtocol === "HTTP/1.1") signal("notice", "HTTP/1.1 from something claiming to be a modern browser.");
       if (ed.tlsVersion === "TLSv1.3") signal("ok", "TLS 1.3 — nothing weak on the table.");
