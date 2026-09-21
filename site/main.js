@@ -670,6 +670,8 @@
     function render() {
       var e = edge || {}, ed = e.edge || {}, net = e.network || {}, geo = e.geo || {}, hd = e.headers || {};
       var ua = uaSummary(), clockTz = null;
+      // Over HTTP/3 there is no TCP handshake, so the edge reports the QUIC RTT instead.
+      var rtt = ed.clientTcpRtt > 0 ? { v: ed.clientTcpRtt, kind: "tcp" } : ed.clientQuicRtt > 0 ? { v: ed.clientQuicRtt, kind: "quic" } : null;
       try { clockTz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (x) {}
 
       /* trace */
@@ -678,7 +680,7 @@
       setText("traceIspSub", net.asn ? "AS" + net.asn : "");
       setText("traceEdge", ed.colo ? "edge " + ed.colo : "edge");
       setText("traceEdgeSub", ed.colo ? (COLO[ed.colo] || "Cloudflare") : "Cloudflare");
-      setText("traceRtt", ed.clientTcpRtt != null ? ed.clientTcpRtt + " ms tcp" : "");
+      setText("traceRtt", rtt ? rtt.v + " ms " + rtt.kind : "");
       setText("traceTotal", device.fetchMs != null ? "round trip " + device.fetchMs + " ms" : "");
       reflect.classList.add("is-traced");
 
@@ -689,7 +691,7 @@
       row("edge", "ClientHello", ed.tlsClientHelloLength ? ed.tlsClientHelloLength + " bytes" : null, "The very first thing you sent: the TLS handshake opener. Its size and shape identify a browser family before any cookie or JavaScript exists.");
       row("edge", "Cipher hash", ed.tlsClientCiphersSha1, "SHA-1 of the cipher suites you offered, in order. This is the heart of a JA3 fingerprint: Chrome, Firefox, Safari and curl each produce a different one.");
       row("edge", "Extension hash", ed.tlsClientExtensionsSha1, "SHA-1 of the TLS extensions you sent. Combined with the cipher hash, bot detection can tell a real browser from a library claiming to be one.");
-      row("edge", "Edge RTT", ed.clientTcpRtt != null ? ed.clientTcpRtt + " ms" : null, "Round-trip time measured by the edge from your TCP handshake — light-speed distance plus your last mile.");
+      row("edge", "Edge RTT", rtt ? rtt.v + " ms (" + rtt.kind + ")" : null, "Round-trip time the edge measured from your transport handshake — TCP for HTTP/1.1 and 2, QUIC for HTTP/3. Light-speed distance plus your last mile.");
       row("edge", "Round trip here", device.fetchMs != null ? device.fetchMs + " ms" : null, "Measured in this page: from sending the request to reading the answer. The gap above the edge RTT is TLS, the Worker, and your browser.");
       row("edge", "Cloudflare colo", ed.colo ? ed.colo + (COLO[ed.colo] ? " · " + COLO[ed.colo] : "") : null, "The data centre that terminated your TLS. Anycast routing sends you to the nearest one, so this is roughly where you are on the internet.");
       row("edge", "Ray", e.ray, "Cloudflare's per-request id. If you ever open a support ticket, this is the number they ask for.");
@@ -740,7 +742,7 @@
       if (ua.chPlatform && ua.uaOs && ua.chPlatform.toLowerCase().indexOf(ua.uaOs.toLowerCase().slice(0, 3)) === -1) signal("warn", "Client Hints say " + ua.chPlatform + " but the User-Agent claims " + ua.uaOs + " — a spoofed UA.");
       if (navigator.webdriver) signal("warn", "WebDriver flag set — Selenium, Playwright or Puppeteer is driving this browser.");
       if (!(navigator.languages && navigator.languages.length)) signal("warn", "No languages at all — headless browsers forget to set them.");
-      if (ed.clientTcpRtt != null && device.fetchMs != null && device.fetchMs < ed.clientTcpRtt * 0.5) signal("notice", "Your fetch came back in half the edge's own RTT measurement — something nearer than Cloudflare is answering.");
+      if (rtt && device.fetchMs != null && device.fetchMs < rtt.v * 0.5) signal("notice", "Your fetch came back in half the edge's own RTT measurement — something nearer than Cloudflare is answering.");
       setTimeout(function () { if (!motionSignalled) signal("notice", "No pointer movement in eight seconds — bots don't fidget. Move the mouse to clear this.", "still"); }, 8000);
       score();
 
