@@ -21,3 +21,6 @@ Thumbs.db
 !.dev.vars.example
 .env*
 !.env.example
+
+# npx/wrangler leave this behind locally
+node_modules/

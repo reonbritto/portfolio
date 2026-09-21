@@ -182,6 +182,82 @@
           <li aria-hidden="true"><img class="section-cat" src="assets/cat-playing.gif" alt="" loading="lazy" /></li>
         </ul>
       </nav>
+
+      <!-- ================= REFLECT: what your browser just told me ================= -->
+      <section class="reflect" id="reflect" aria-labelledby="reflectTitle">
+        <header class="reflect__head">
+          <div>
+            <h2 class="reflect__title" id="reflectTitle">What your browser just told me</h2>
+            <p class="reflect__sub">Your own request, reflected back from Cloudflare’s edge. Nothing is stored — the Worker that answers has no storage and doesn’t log.</p>
+          </div>
+          <p class="reflect__status" id="reflectStatus" aria-live="polite">● waiting</p>
+        </header>
+
+        <ol class="reflect__trace" aria-label="The route your request took">
+          <li class="reflect__hop">
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4.5 16-4.5 16 0"/></svg></span>
+            <span class="reflect__hop-name" id="traceYou">you</span>
+            <span class="reflect__hop-sub">this browser</span>
+          </li>
+          <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label"></span></li>
+          <li class="reflect__hop">
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 16h18M7 10h10M12 4v16"/></svg></span>
+            <span class="reflect__hop-name" id="traceIsp">your ISP</span>
+            <span class="reflect__hop-sub" id="traceIspSub"></span>
+          </li>
+          <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label" id="traceRtt"></span></li>
+          <li class="reflect__hop">
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.3-1.5A4.5 4.5 0 0 0 7 18z"/></svg></span>
+            <span class="reflect__hop-name" id="traceEdge">edge</span>
+            <span class="reflect__hop-sub" id="traceEdgeSub">Cloudflare</span>
+          </li>
+          <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label" id="traceTotal"></span></li>
+          <li class="reflect__hop">
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h8M8 14h5"/></svg></span>
+            <span class="reflect__hop-name">reondev.top</span>
+            <span class="reflect__hop-sub">this page</span>
+          </li>
+        </ol>
+
+        <div class="reflect__verdict">
+          <div class="reflect__gauge" role="img" aria-label="Human likelihood score">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle class="reflect__arc-track" cx="32" cy="32" r="26"></circle>
+              <circle class="reflect__arc" id="reflectArc" cx="32" cy="32" r="26"></circle>
+            </svg>
+            <div class="reflect__gauge-text"><span class="reflect__gauge-num" id="reflectScore">–</span><span class="reflect__gauge-word" id="reflectScoreWord">scoring</span></div>
+          </div>
+          <div class="reflect__verdict-body">
+            <div class="reflect__human">
+              <span class="reflect__human-label">pointer entropy</span>
+              <span class="reflect__human-track"><span class="reflect__human-bar" id="reflectHumanBar"></span></span>
+              <span class="reflect__human-num" id="reflectHumanNum">0%</span>
+            </div>
+            <ul class="reflect__signals" id="reflectSignals" aria-label="Cross-checks"></ul>
+          </div>
+        </div>
+
+        <div class="reflect__grid" id="reflectGrid">
+          <div class="reflect__group" data-group="edge"><h3 class="reflect__group-title">Connection <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
+          <div class="reflect__group" data-group="net"><h3 class="reflect__group-title">Network &amp; place <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
+          <div class="reflect__group" data-group="dev"><h3 class="reflect__group-title">Device <span>from this browser</span></h3><dl class="reflect__rows"></dl></div>
+        </div>
+
+        <div class="reflect__fp">
+          <div class="reflect__fp-head">
+            <span class="reflect__fp-label">how trackers see you without cookies</span>
+            <button type="button" class="reflect__fp-toggle" id="reflectFpToggle" aria-expanded="false" aria-controls="reflectFpParts">what’s it made of?</button>
+          </div>
+          <code class="reflect__fp-hash" id="reflectFp">computing…</code>
+          <pre class="reflect__fp-parts" id="reflectFpParts"></pre>
+        </div>
+
+        <div class="reflect__curl">
+          <span class="reflect__curl-label">the same data, for your terminal</span>
+          <code class="reflect__curl-cmd">curl -s https://reondev.top/api/hello</code>
+          <button type="button" class="reflect__curl-copy" id="reflectCopy">copy</button>
+        </div>
+      </section>
     </div>
   </div>
 
