@@ -200,11 +200,10 @@ img { max-width: 100%; height: auto; }
 @media (min-width: 560px) {
   .about-hero { flex-direction: row; align-items: center; justify-content: center; gap: 2.25rem; }
 }
-/* Wide screens: the cat sits on the page's centre line, the photo just to its left. */
+/* Wide screens: the photo and the cat stay one centred unit, with more air and a bigger cat. */
 @media (min-width: 1024px) {
-  .about-hero { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 2.25rem; }
-  .about-hero__media { grid-column: 1; justify-self: end; }
-  .about-hero__copy { grid-column: 2; }
+  .about-hero { gap: 3.25rem; }
+  .about-hero > .about-hero__copy { flex-basis: 21.5rem; width: 21.5rem; } /* outranks the 560px rule below */
 }
 .about-hero__media { flex: none; width: 15.125rem; margin: 0; }
 .about-hero__photo {
@@ -220,15 +219,19 @@ img { max-width: 100%; height: auto; }
   background-origin: border-box;
   background-clip: padding-box, border-box;
 }
-/* "Hiya", the cat and the player read as one centred cluster next to the photo */
+/* "Hiya", the cat and the player read as one centred cluster next to the photo.
+   The column gets a definite width so the SVG inside can size to it - a percentage
+   width inside a shrink-wrapped flex item falls back to the SVG's 300px default. */
 .about-hero__copy {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 0 1 auto;
+  width: 100%;
   min-width: 0;
   max-width: 100%;
 }
+@media (min-width: 560px) { .about-hero__copy { flex: 0 1 19rem; width: 19rem; } }
 .about-copy {
   color: var(--muted);
   overflow-wrap: break-word;
@@ -265,7 +268,7 @@ img { max-width: 100%; height: auto; }
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  width: min(100%, 19rem);
+  width: 100%;
   margin-top: 0.35rem;
 }
 .bongo__svg { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
@@ -661,8 +664,8 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.7rem;
+  font-family: var(--font-sans); font-variant-numeric: tabular-nums;
+  font-size: 0.72rem;
   white-space: nowrap;
 }
 .reflect__status--ok { color: var(--teal); border-color: color-mix(in srgb, var(--teal) 45%, var(--border)); }
@@ -672,13 +675,13 @@ img { max-width: 100%; height: auto; }
 .reflect__trace { display: flex; align-items: flex-start; margin: 0.6rem 0 1rem; padding: 0; list-style: none; color: color-mix(in srgb, var(--accent) 72%, var(--muted) 28%); }
 .reflect__hop { display: flex; flex: 0 0 7.25rem; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
 .reflect__hop-icon { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border: 2px solid currentColor; border-radius: 999px; background: var(--card); }
-.reflect__hop-icon svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.reflect__hop-name { margin-top: 0.5rem; max-width: 100%; color: var(--text); font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: 0.72rem; line-height: 1.3; overflow-wrap: anywhere; }
+.reflect__hop-icon svg { width: 1.2rem; height: 1.2rem; }
+.reflect__hop-name { margin-top: 0.5rem; max-width: 100%; color: var(--text); font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 0.78rem; font-weight: 500; line-height: 1.3; overflow-wrap: anywhere; }
 .reflect__hop-sub { color: var(--muted); font-size: 0.66rem; line-height: 1.3; }
 .reflect__wire { position: relative; flex: 1 1 auto; height: 2px; margin: 1.2rem 0.2rem 0; background-image: repeating-linear-gradient(90deg, currentColor 0 6px, transparent 6px 14px); background-size: 14px 2px; opacity: 0.55; }
 .is-traced .reflect__wire { opacity: 1; animation: reflect-flow 1.4s linear infinite; }
 @keyframes reflect-flow { to { background-position: -28px 0; } }
-.reflect__wire-label { position: absolute; left: 50%; bottom: 0.55rem; transform: translateX(-50%); color: var(--muted); font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: 0.64rem; white-space: nowrap; }
+.reflect__wire-label { position: absolute; left: 50%; bottom: 0.55rem; transform: translateX(-50%); color: var(--muted); font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 0.68rem; white-space: nowrap; }
 @media (max-width: 560px) {
   .reflect__trace { flex-direction: column; align-items: stretch; }
   .reflect__hop { flex: none; flex-direction: row; align-items: center; gap: 0.75rem; text-align: left; }
@@ -707,7 +710,7 @@ img { max-width: 100%; height: auto; }
 .reflect__human-label { flex: none; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.62rem; }
 .reflect__human-track { flex: 1; height: 5px; border-radius: 999px; background: var(--border); overflow: hidden; }
 .reflect__human-bar { display: block; width: 0; height: 100%; border-radius: 999px; background: var(--teal); transition: width 0.25s; }
-.reflect__human-num { flex: none; width: 2.4rem; text-align: right; font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+.reflect__human-num { flex: none; width: 2.4rem; text-align: right; font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
 .reflect__signals { display: grid; gap: 0.3rem; margin: 0; padding: 0; list-style: none; }
 .reflect__signal { position: relative; padding-left: 1rem; font-size: 0.8125rem; line-height: 1.45; color: var(--text); }
 .reflect__signal::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 7px; height: 7px; border-radius: 999px; background: var(--muted); }
@@ -723,6 +726,8 @@ img { max-width: 100%; height: auto; }
 .reflect__group { margin: 0; min-width: 0; }
 .reflect__group-title { margin: 0 0 0.45rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
 .reflect__group-title span { margin-left: 0.35rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--muted); }
+.reflect__ico { width: 0.95rem; height: 0.95rem; margin-right: 0.4rem; vertical-align: -0.2em; color: var(--accent); }
+.reflect__fp-label .reflect__ico, .reflect__curl-label .reflect__ico { width: 0.85rem; height: 0.85rem; vertical-align: -0.15em; }
 .reflect__rows { display: grid; gap: 0.15rem; }
 .reflect__row {
   display: grid;
@@ -741,7 +746,7 @@ img { max-width: 100%; height: auto; }
 .reflect__row[aria-expanded] { cursor: pointer; }
 .reflect__row[aria-expanded]:hover, .reflect__row[aria-expanded]:focus-visible { background: var(--bg); outline: none; }
 .reflect__row dt { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.02em; }
-.reflect__row dd { margin: 0; min-width: 0; font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; font-size: 0.78rem; overflow-wrap: anywhere; }
+.reflect__row dd { margin: 0; min-width: 0; font-family: var(--font-sans); font-variant-numeric: tabular-nums; font-size: 0.8125rem; overflow-wrap: anywhere; }
 .reflect__row--warn dd { color: var(--coral); }
 .reflect__row .reflect__note { grid-column: 1 / -1; display: none; margin: 0.25rem 0 0.15rem; color: var(--muted); font-family: var(--font-sans); font-size: 0.78rem; line-height: 1.5; }
 .reflect__row.is-open .reflect__note { display: block; }

@@ -184,6 +184,7 @@
       </nav>
 
       <!-- ================= REFLECT: what your browser just told me ================= -->
+      <!-- Icons in this section are Lucide (https://lucide.dev), ISC licence. -->
       <section class="reflect" id="reflect" aria-labelledby="reflectTitle">
         <header class="reflect__head">
           <div>
@@ -195,25 +196,25 @@
 
         <ol class="reflect__trace" aria-label="The route your request took">
           <li class="reflect__hop">
-            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4.5 16-4.5 16 0"/></svg></span>
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/> <path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
             <span class="reflect__hop-name" id="traceYou">you</span>
             <span class="reflect__hop-sub">this browser</span>
           </li>
           <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label"></span></li>
           <li class="reflect__hop">
-            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 16h18M7 10h10M12 4v16"/></svg></span>
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9"/> <path d="M7.8 4.7a6.14 6.14 0 0 0-.8 7.5"/> <circle cx="12" cy="9" r="2"/> <path d="M16.2 4.8c2 2 2.26 5.11.8 7.47"/> <path d="M19.1 1.9a9.96 9.96 0 0 1 0 14.1"/> <path d="M9.5 18h5"/> <path d="m8 22 4-11 4 11"/></svg></span>
             <span class="reflect__hop-name" id="traceIsp">your ISP</span>
             <span class="reflect__hop-sub" id="traceIspSub"></span>
           </li>
           <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label" id="traceRtt"></span></li>
           <li class="reflect__hop">
-            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18h10a4 4 0 0 0 .5-8 6 6 0 0 0-11.3-1.5A4.5 4.5 0 0 0 7 18z"/></svg></span>
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span>
             <span class="reflect__hop-name" id="traceEdge">edge</span>
             <span class="reflect__hop-sub" id="traceEdgeSub">Cloudflare</span>
           </li>
           <li class="reflect__wire" aria-hidden="true"><span class="reflect__wire-label" id="traceTotal"></span></li>
           <li class="reflect__hop">
-            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h8M8 14h5"/></svg></span>
+            <span class="reflect__hop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/> <path d="M2 12h20"/></svg></span>
             <span class="reflect__hop-name">reondev.top</span>
             <span class="reflect__hop-sub">this page</span>
           </li>
@@ -238,14 +239,14 @@
         </div>
 
         <div class="reflect__grid" id="reflectGrid">
-          <div class="reflect__group" data-group="edge"><h3 class="reflect__group-title">Connection <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
-          <div class="reflect__group" data-group="net"><h3 class="reflect__group-title">Network &amp; place <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
-          <div class="reflect__group" data-group="dev"><h3 class="reflect__group-title">Device <span>from this browser</span></h3><dl class="reflect__rows"></dl></div>
+          <div class="reflect__group" data-group="edge"><h3 class="reflect__group-title"><svg class="reflect__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/> <path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Connection <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
+          <div class="reflect__group" data-group="net"><h3 class="reflect__group-title"><svg class="reflect__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/> <circle cx="12" cy="10" r="3"/></svg>Network &amp; place <span>from the edge</span></h3><dl class="reflect__rows"></dl></div>
+          <div class="reflect__group" data-group="dev"><h3 class="reflect__group-title"><svg class="reflect__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"/> <path d="M10 19v-3.96 3.15"/> <path d="M7 19h5"/> <rect width="6" height="10" x="16" y="12" rx="2"/></svg>Device <span>from this browser</span></h3><dl class="reflect__rows"></dl></div>
         </div>
 
         <div class="reflect__fp">
           <div class="reflect__fp-head">
-            <span class="reflect__fp-label">how trackers see you without cookies</span>
+            <span class="reflect__fp-label"><svg class="reflect__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/> <path d="M14 13.12c0 2.38 0 6.38-1 8.88"/> <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/> <path d="M2 12a10 10 0 0 1 18-6"/> <path d="M2 16h.01"/> <path d="M21.8 16c.2-2 .131-5.354 0-6"/> <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/> <path d="M8.65 22c.21-.66.45-1.32.57-2"/> <path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></svg>how trackers see you without cookies</span>
             <button type="button" class="reflect__fp-toggle" id="reflectFpToggle" aria-expanded="false" aria-controls="reflectFpParts">what’s it made of?</button>
           </div>
           <code class="reflect__fp-hash" id="reflectFp">computing…</code>
@@ -253,7 +254,7 @@
         </div>
 
         <div class="reflect__curl">
-          <span class="reflect__curl-label">the same data, for your terminal</span>
+          <span class="reflect__curl-label"><svg class="reflect__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19h8"/> <path d="m4 17 6-6-6-6"/></svg>the same data, for your terminal</span>
           <code class="reflect__curl-cmd">curl -s https://reondev.top/api/hello</code>
           <button type="button" class="reflect__curl-copy" id="reflectCopy">copy</button>
         </div>
