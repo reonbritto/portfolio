@@ -198,7 +198,13 @@ img { max-width: 100%; height: auto; }
   margin-bottom: 0.5rem;
 }
 @media (min-width: 560px) {
-  .about-hero { flex-direction: row; align-items: center; gap: 2.25rem; }
+  .about-hero { flex-direction: row; align-items: center; justify-content: center; gap: 2.25rem; }
+}
+/* Wide screens: the cat sits on the page's centre line, the photo just to its left. */
+@media (min-width: 1024px) {
+  .about-hero { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 2.25rem; }
+  .about-hero__media { grid-column: 1; justify-self: end; }
+  .about-hero__copy { grid-column: 2; }
 }
 .about-hero__media { flex: none; width: 15.125rem; margin: 0; }
 .about-hero__photo {
@@ -340,9 +346,17 @@ img { max-width: 100%; height: auto; }
 @media (min-width: 640px) { .about-connect { margin-top: 2.25rem; } }
 .about-connect__list {
   align-items: center;
+  justify-content: center; /* the whole About page composes around one centre line */
   gap: 0.65rem 1.15rem;
   flex-wrap: wrap;
   display: flex;
+}
+/* The decorative cat at the end of the row takes no width on desktop, so the
+   links themselves - not links-plus-cat - are what gets centred. */
+@media (min-width: 768px) {
+  .about-connect__list > li[aria-hidden="true"] { width: 0; margin-left: -1.15rem; overflow: visible; }
+  /* the global img { max-width: 100% } would collapse it inside a 0-width parent */
+  .about-connect__list > li[aria-hidden="true"] .section-cat { margin-left: 0.6rem; max-width: none; }
 }
 @media (max-width: 767px) {
   .about-connect { display: flex; flex-direction: column; align-items: center; }

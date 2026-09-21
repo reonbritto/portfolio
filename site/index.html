@@ -529,25 +529,53 @@
         <g stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <line x1="0" y1="80" x2="1000" y2="80"></line>
           <g class="site-footer__skyline-buildings">
-            <!-- The one skyline, on every tab: gantry cranes, a dome, a row of terraces -->
-            <polyline points="470,80 470,20 560,20 560,80"></polyline>
-            <line x1="470" y1="34" x2="560" y2="34"></line>
-            <line x1="515" y1="20" x2="515" y2="34"></line>
-            <polyline points="590,80 590,30 660,30 660,80"></polyline>
-            <line x1="590" y1="42" x2="660" y2="42"></line>
-            <!-- City hall dome -->
-            <rect x="700" y="55" width="80" height="25"></rect>
-            <path d="M 720 55 C 720 38, 760 38, 760 55"></path>
-            <line x1="740" y1="30" x2="740" y2="41"></line>
-            <!-- terraces -->
-            <rect x="820" y="60" width="24" height="20"></rect>
-            <rect x="852" y="52" width="24" height="28"></rect>
-            <rect x="884" y="62" width="24" height="18"></rect>
+            <!-- Pune <> Udupi. Left: Shaniwar Wada's gate between its two bastions, and a
+                 pair of wadas. Right: Sri Krishna Matha's tiered tower and chariot, two
+                 coconut palms, and the Kaup lighthouse. -->
+            <!-- Shaniwar Wada -->
+            <path d="M 380 80 V 44 h 6 v -6 h 6 v 6 h 6 v -6 h 6 v 6 h 6 V 80"></path>
+            <path d="M 410 80 V 34 H 452 V 80"></path>
+            <path d="M 420 80 V 58 C 420 48, 442 48, 442 58 V 80"></path>
+            <line x1="410" y1="42" x2="452" y2="42"></line>
+            <path d="M 452 80 V 44 h 6 v -6 h 6 v 6 h 6 v -6 h 6 v 6 h 6 V 80"></path>
+            <!-- wadas -->
+            <path d="M 500 80 V 58 L 515 46 L 530 58 V 80"></path>
+            <path d="M 534 80 V 62 L 546 52 L 558 62 V 80"></path>
+            <!-- Sri Krishna Matha -->
+            <rect x="600" y="56" width="80" height="24"></rect>
+            <rect x="612" y="44" width="56" height="12"></rect>
+            <rect x="623" y="34" width="34" height="10"></rect>
+            <rect x="632" y="26" width="16" height="8"></rect>
+            <line x1="640" y1="26" x2="640" y2="16"></line>
+            <!-- the chariot -->
+            <circle cx="708" cy="74" r="6"></circle>
+            <circle cx="732" cy="74" r="6"></circle>
+            <path d="M 700 68 H 740 L 736 58 H 704 Z"></path>
+            <path d="M 706 58 H 734 L 730 48 H 710 Z"></path>
+            <path d="M 712 48 H 728 L 725 40 H 715 Z"></path>
+            <line x1="720" y1="40" x2="720" y2="30"></line>
+            <!-- coconut palms -->
+            <path d="M 786 80 C 784 66, 780 52, 772 40"></path>
+            <path d="M 772 40 c -10 -6, -18 -4, -24 4"></path>
+            <path d="M 772 40 c 2 -10, 8 -14, 16 -12"></path>
+            <path d="M 772 40 c 10 -4, 18 0, 22 8"></path>
+            <path d="M 772 40 c -8 2, -14 8, -14 16"></path>
+            <path d="M 822 80 C 824 66, 826 54, 832 42"></path>
+            <path d="M 832 42 c -10 -6, -18 -4, -24 4"></path>
+            <path d="M 832 42 c 2 -10, 8 -14, 16 -12"></path>
+            <path d="M 832 42 c 10 -4, 18 0, 22 8"></path>
+            <path d="M 832 42 c -6 4, -10 10, -10 18"></path>
+            <!-- Kaup lighthouse -->
+            <path d="M 866 80 L 870 36 H 882 L 886 80"></path>
+            <rect x="868" y="28" width="16" height="8"></rect>
+            <line x1="876" y1="28" x2="876" y2="22"></line>
+            <line x1="888" y1="30" x2="898" y2="26"></line>
+            <line x1="888" y1="34" x2="899" y2="34"></line>
           </g>
         </g>
       </svg>
-      <div class="site-footer__skyline-hover" aria-label="Click the skyline to send a cat across the rooftops.">
-        <span class="site-footer__skyline-caption" role="tooltip">Click the skyline — something might walk by.</span>
+      <div class="site-footer__skyline-hover" aria-label="Pune and Udupi skyline. Click it to send a cat across the rooftops.">
+        <span class="site-footer__skyline-caption" role="tooltip">Pune &lt;&gt; Udupi — click, and something might walk by.</span>
       </div>
     </div>
     <div class="site-footer__content">
