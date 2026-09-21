@@ -268,7 +268,8 @@ img { max-width: 100%; height: auto; }
   width: min(100%, 19rem);
   margin-top: 0.35rem;
 }
-.bongo__svg { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; }
+.bongo__svg { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.bongo__eye { transform-box: fill-box; transform-origin: 50% 50%; }
 .bongo__body { animation: bongo-bob 2.8s ease-in-out infinite; }
 .bongo.is-playing .bongo__body { animation-duration: 1.4s; }
 @keyframes bongo-bob {
@@ -280,7 +281,8 @@ img { max-width: 100%; height: auto; }
 .bongo__paw.is-down { transform: translateY(13px) scaleY(0.8); transition-duration: 0.04s; }
 .bongo__hit { opacity: 0; transition: opacity 0.05s; }
 .bongo__paw.is-down .bongo__hit { opacity: 1; }
-.bongo__key { fill: var(--card); stroke: var(--border); stroke-width: 1; transition: fill 0.12s, stroke 0.12s; }
+.bongo__key { fill: var(--card); stroke: var(--border); stroke-width: 1; cursor: pointer; transition: fill 0.12s, stroke 0.12s; }
+@media (hover: hover) { .bongo__key:hover { fill: var(--coral-soft); } }
 .bongo__key.is-lit { fill: var(--coral-soft); stroke: var(--coral); }
 
 /* player bar sits right under the keyboard */

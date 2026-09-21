@@ -283,15 +283,16 @@
       o1.start(t); o2.start(t); o1.stop(t + tune.decay + 0.1); o2.stop(t + tune.decay + 0.1);
     }
 
+    // One paw slam + one lit key. The tune picks a random key on that side; a
+    // visitor's own key press lights the key they hit.
+    function slam(side, key) {
+      var paw = side === "l" ? pawL : pawR;
+      if (!key) { var pool = side === "l" ? keysL : keysR; key = pool[Math.floor(Math.random() * pool.length)]; }
+      paw.classList.add("is-down"); key.classList.add("is-lit");
+      setTimeout(function () { paw.classList.remove("is-down"); key.classList.remove("is-lit"); }, 120);
+    }
     function tap(side, when) {
-      var delay = Math.max(0, (when - ctx.currentTime) * 1000);
-      setTimeout(function () {
-        var paw = side === "l" ? pawL : pawR;
-        var keys = side === "l" ? keysL : keysR;
-        var key = keys[Math.floor(Math.random() * keys.length)];
-        paw.classList.add("is-down"); if (key) key.classList.add("is-lit");
-        setTimeout(function () { paw.classList.remove("is-down"); if (key) key.classList.remove("is-lit"); }, 120);
-      }, delay);
+      setTimeout(function () { slam(side); }, Math.max(0, (when - ctx.currentTime) * 1000));
     }
 
     function hit(i, t, vel) {
@@ -399,11 +400,85 @@
       master.gain.linearRampToValueAtTime(0, now + 0.7);
     }
 
+    /* --- the keyboard is playable ---
+       Keys form one ladder, bottom row left to right then top row, mapped onto the
+       current tune's pentatonic scale across two octaves - so nothing a visitor
+       plays can clash, with or without the tune running. Click/tap a key, or type:
+       z x c v b n m , . / for the bottom row, a s d f g h j k l ; for the top. */
+    var svgEl = bongo.querySelector(".bongo__svg");
+    var aboutPanel = document.getElementById("panel-about");
+    var ladder = Array.prototype.slice.call(bongo.querySelectorAll(".bongo__key")).sort(function (a, b) {
+      var ya = +a.getAttribute("y"), yb = +b.getAttribute("y");
+      return ya !== yb ? yb - ya : (+a.getAttribute("x")) - (+b.getAttribute("x"));
+    });
+    var KEYMAP = "zxcvbnm,./asdfghjkl;";
+
+    function freqForStep(i) {
+      var n = tune.scale.length;
+      return tune.scale[i % n] * Math.pow(2, Math.floor(i / n));
+    }
+    function ensureAudio() {
+      if (!ctx) { setup(); tuneStart = ctx.currentTime; }
+      if (ctx.state === "suspended") ctx.resume();
+      if (!playing) { // stop() fades the master out; a key press brings it straight back
+        var now = ctx.currentTime;
+        master.gain.cancelScheduledValues(now);
+        master.gain.setTargetAtTime(0.55, now, 0.04);
+      }
+    }
+    function playKey(i) {
+      if (i < 0 || i >= ladder.length) return;
+      ensureAudio();
+      var key = ladder[i];
+      note(freqForStep(i), ctx.currentTime, 0.24);
+      slam(key.getAttribute("data-side"), key);
+    }
+    ladder.forEach(function (key, i) {
+      key.addEventListener("pointerdown", function (e) { e.preventDefault(); playKey(i); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey || aboutPanel.hidden) return;
+      var i = KEYMAP.indexOf(e.key.toLowerCase());
+      if (i !== -1) playKey(i);
+    });
+
+    /* --- the eyes follow the cursor, and blink --- */
+    var eyes = bongo.querySelectorAll(".bongo__eye");
+    var look = { tx: 0, ty: 0, x: 0, y: 0, raf: null }, blinkY = 1;
+    function applyEyes() {
+      var t = "translate(" + look.x.toFixed(2) + "px," + look.y.toFixed(2) + "px) scaleY(" + blinkY + ")";
+      for (var k = 0; k < eyes.length; k++) eyes[k].style.transform = t;
+    }
+    function stepLook() {
+      look.x += (look.tx - look.x) * 0.2; look.y += (look.ty - look.y) * 0.2;
+      applyEyes();
+      look.raf = (Math.abs(look.tx - look.x) > 0.05 || Math.abs(look.ty - look.y) > 0.05) ? requestAnimationFrame(stepLook) : null;
+    }
+    document.addEventListener("mousemove", function (e) {
+      if (aboutPanel.hidden) return;
+      var r = svgEl.getBoundingClientRect();
+      if (!r.width) return;
+      var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      var dy = (e.clientY - (r.top + r.height * 0.45)) / r.height;
+      var m = Math.hypot(dx, dy) || 1, k = Math.min(1, m) / m; // clamp to a unit circle
+      look.tx = dx * k * 5; look.ty = dy * k * 4;               // at most 5 / 4 units of travel
+      if (!look.raf) look.raf = requestAnimationFrame(stepLook);
+    });
+    if (!reducedMotion) (function blink() {
+      setTimeout(function () {
+        blinkY = 0.12; applyEyes();
+        setTimeout(function () { blinkY = 1; applyEyes(); blink(); }, 110);
+      }, 2800 + Math.random() * 3200);
+    })();
+
     showTune();
     // Play/pause is the visitor's call: switching tabs does not stop the tune, same
-    // as any other player. Clicking the cat toggles it too.
+    // as any other player. Clicking the cat toggles it too - but not a key press.
     bongoBtn.addEventListener("click", function () { playing ? stop() : start(); });
-    bongo.querySelector(".bongo__svg").addEventListener("click", function () { playing ? stop() : start(); });
+    svgEl.addEventListener("click", function (e) {
+      if (e.target.classList && e.target.classList.contains("bongo__key")) return;
+      playing ? stop() : start();
+    });
     bongoNext.addEventListener("click", nextTune);
   }
 
